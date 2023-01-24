@@ -1,0 +1,58 @@
+{% extends 'dashboard.html' %}
+
+{% block dahsboard-boxes %}
+<!-- DASHBOARD BOXES -->
+<div class="col-md-10">
+    <div class="row">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    {% if request.user.is_superuser %}
+                    <div class="col">
+                        <div class="employee-box sec-box">
+                            <a href="">
+                            <span>Employees</span>
+                            </a>
+                            <span class="count-object">0</span> 
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="leave-box sec-box">
+                            <a href="">
+                            <span>Leaves</span>
+                            </a>
+                            <span class="count-object" style="color:#FF883E;">0</span> 
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="birthday-box sec-box">
+                            <a href="">
+                            <span>Birthdays</span>
+                            </a>
+                            <span class="count-object">0</span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col col-lg-6">
+                        <div class="leave-box sec-box">
+                            <a href="">
+                            <span>Leaves</span>
+                            </a>
+                            <span class="count-object" style="color:#41b6d6;"></span> 
+                        </div>
+                    </div>
+                    <div class="col col-lg-6">
+                        <div class="birthday-box sec-box">
+                            <a href="">
+                            <span>Birthdays</span>
+                            </a>
+                            <span class="count-object"></span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>           
+        </div>
+    </div>  
+</div> 
+{% endblock dahsboard-boxes %}

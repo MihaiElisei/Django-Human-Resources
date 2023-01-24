@@ -13,23 +13,71 @@
 </head>
 <body>
     <div class="wrapper">
-        
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
                 <div class="col-sm">
-                    <a href="{% url 'index' %}" class="navbar-brand flex-grow-1" style="text-align: center; color: white; margin-left: 25px; font-size: 25px;">
+                    <a href="{% url 'index' %}" class="navbar-brand flex-grow-1 text-warning" style="text-align: center; margin-left: 25px; font-size: 25px;">
                         {% block navbar-content %}
                         <i class="fas fa-users-cog logo"></i>&nbsp;&nbsp; HR-APP
                         {% endblock navbar-content %}
                     </a>
                 </div>
-                {% block navheader %}{% endblock navheader %}
+                {% if user.is_authenticated %}
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle nav-links text-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Users
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Create User</a></li>
+                              <li><a class="dropdown-item" href="#">All Users</a></li>
+                            </ul>
+                          </li>
+                          <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle nav-links text-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Leave
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Apply For Leave</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="#">Pending Leaves</a></li>
+                              <li><a class="dropdown-item" href="#">Approved Leaves</a></li>
+                              <li><a class="dropdown-item" href="#">Rejected Leaves</a></li>
+                            </ul>
+                          </li>
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle nav-links text-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Employee
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Add Employee</a></li>
+                              <li><a class="dropdown-item" href="#">All Employees</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="#">Emergency</a></li>
+                              <li><a class="dropdown-item" href="#">Family</a></li>
+                              <li><a class="dropdown-item" href="#">Bank Account</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="#">Delete Employee</a></li>
+                            </ul>
+                          </li>
+                         
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                {% endif %}
                 <div class="col-sm">
                     {% block btn-nav %}
                     {% if user.is_authenticated %}
-                    <a href="{% url 'account_logout' %}" class="btn btn-md border-light text-light" id="btn-nav">Logout</a>
+                    <a href="{% url 'account_logout' %}" class="btn btn-md border-warning text-warning" id="btn-nav">Logout</a>
                     {% else %}
-                    <a href="{% url 'account_login' %}" class="btn btn-md border-light text-light" id="btn-nav">Login</a>
+                    <a href="{% url 'account_login' %}" class="btn btn-md border-warning text-warning" id="btn-nav" >Login</a>
                     {% endif %}
                     {% endblock btn-nav %}
                 </div>
@@ -37,11 +85,10 @@
         </header>
         <!-- Block content(ROOT) -->
         {% block content %}{% endblock content %}
-    
     </div> <!-- END WRAPPER -->
 
     <!-- footer -->
-    <footer class="bg-dark text-center text-lg-start text-light" id="footer" {% block footer %}{% endblock footer %}>
+    <footer class="bg-dark text-center text-lg-start text-warning" id="footer" {% block footer %}{% endblock footer %}>
         <div class="text-center p-3" style="background-color: rgba(0,0,0,.2);">
             Copyright &copy; {% now "Y" %} <span>All rights reserved</span> | Made by 
             <a href="#" target="_blank" style="color: #0dcaf0; text-decoration: none;">Mihai Elisei</a>

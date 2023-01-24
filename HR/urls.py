@@ -9,4 +9,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     # Path to accounts
     path('accounts/', include('allauth.urls')),
+    # Path to access the dashboard page
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]

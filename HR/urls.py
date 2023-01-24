@@ -13,4 +13,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     # Path to access all employees page
     path('employees/', views.all_employees, name='employees'),
+    # Create new employee
+    path('employees/create/', views.create_employee, name='create_employee'),
 ]

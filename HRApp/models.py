@@ -3,14 +3,30 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from phonenumber_field.modelfields import PhoneNumberField
 
+
+# NATIONALITY MODEL
+class Nationality(models.Model):
+    name = models.CharField(max_length=125)
+    created = models.DateTimeField(verbose_name=_('Created'), auto_now_add=True)
+    updated = models.DateTimeField(verbose_name=_('Updated'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('Nationality')
+        verbose_name_plural = _('Nationality')
+        ordering = ['name', 'created']
+
+    def __str__(self):
+        return self.name
+
+
 # EMPLOYEE MODEL
 class Employee(models.Model):
     # GENDER
     MALE = 'male'
     FEMALE = 'female'
     GENDER = (
-    (MALE,'Male'),
-    (FEMALE,'Female'),
+    (MALE, 'Male'),
+    (FEMALE, 'Female'),
     )
 
     # TITLE
@@ -21,12 +37,12 @@ class Employee(models.Model):
     SIR = 'Sir'
     MADAM = 'Madam'
     TITLE = (
-    (MR,'Mr'),
-    (MRS,'Mrs'),
-    (MSS,'Mss'),
-    (DR,'Dr'),
-    (SIR,'Sir'),
-    (MADAM,'Madam'),
+    (MR, 'Mr'),
+    (MRS, 'Mrs'),
+    (MSS, 'Mss'),
+    (DR, 'Dr'),
+    (SIR, 'Sir'),
+    (MADAM, 'Madam'),
     )
     # EMPLOYMENT TYPE
     FULL_TIME = 'Full-Time'
@@ -116,5 +132,3 @@ class Employee(models.Model):
         return
 
 
-
-   

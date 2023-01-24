@@ -15,4 +15,8 @@ urlpatterns = [
     path('employees/', views.all_employees, name='employees'),
     # Create new employee
     path('employees/create/', views.create_employee, name='create_employee'),
+    # Edit Employee
+    path('employee/profile/edit/<int:id>/', views.employee_edit_data, name='edit'),
+    # Path to delete the employees 
+    path('delete_employee/<str:id>', views.delete_employee, name="delete_employee"),
 ]

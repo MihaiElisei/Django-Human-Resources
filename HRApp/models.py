@@ -19,6 +19,46 @@ class Nationality(models.Model):
         return self.name
 
 
+# DEPARTMENT MODEL
+class Department(models.Model):
+    '''
+     Department Employee belongs to. eg. Transport, Engineering.
+    '''
+    name = models.CharField(max_length=125)
+    description = models.CharField(max_length=125, null=True, blank=True)
+
+    created = models.DateTimeField(verbose_name=_('Created'), auto_now_add=True)
+    updated = models.DateTimeField(verbose_name=_('Updated'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('Department')
+        verbose_name_plural = _('Departments')
+        ordering = ['name', 'created']
+    
+    def __str__(self):
+        return self.name
+
+
+# ROLE MODEL
+class Role(models.Model):
+    '''
+        Role Table eg. Staff,Manager,H.R ...
+    '''
+    name = models.CharField(max_length=125)
+    description = models.CharField(max_length=125, null=True, blank=True)
+
+    created = models.DateTimeField(verbose_name=_('Created'), auto_now_add=True)
+    updated = models.DateTimeField(verbose_name=_('Updated'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('Role')
+        verbose_name_plural = _('Roles')
+        ordering = ['name', 'created']
+
+    def __str__(self):
+        return self.name
+
+
 # EMPLOYEE MODEL
 class Employee(models.Model):
     # GENDER
@@ -72,7 +112,7 @@ class Employee(models.Model):
     )
 
     # PERSONAL DATA
-    id = models.CharField(_('Employee ID Number'), max_length=10, null=True, blank=False)
+    id = models.CharField(_('Employee ID Number'), max_length=10, null=False, blank=False, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(_('Title'), max_length=5, default=MR, choices=TITLE, blank=False, null=False)
     firstname = models.CharField(_('First Name'), max_length=125, null=False, blank=False)

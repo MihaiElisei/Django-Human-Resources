@@ -27,17 +27,16 @@
                 <div class="col-sm">
                     {% block btn-nav %}
                     {% if user.is_authenticated %}
-                    <a href="" class="btn btn-md border-light text-light" id="btn-nav">Logout</a>
+                    <a href="{% url 'account_logout' %}" class="btn btn-md border-light text-light" id="btn-nav">Logout</a>
                     {% else %}
-                    <a href="" class="btn btn-md border-light text-light" id="btn-nav">Login</a>
+                    <a href="{% url 'account_login' %}" class="btn btn-md border-light text-light" id="btn-nav">Login</a>
                     {% endif %}
                     {% endblock btn-nav %}
                 </div>
             </nav>
         </header>
         <!-- Block content(ROOT) -->
-        {% block content %}
-        {% endblock content %}
+        {% block content %}{% endblock content %}
     
     </div> <!-- END WRAPPER -->
 

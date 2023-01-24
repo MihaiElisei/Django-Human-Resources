@@ -11,4 +11,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     # Path to access the dashboard page
     path('dashboard/', views.dashboard, name='dashboard'),
+    # Path to access all employees page
+    path('employees/', views.all_employees, name='employees'),
 ]

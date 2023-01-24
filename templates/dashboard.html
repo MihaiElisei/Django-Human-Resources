@@ -20,7 +20,7 @@
                         </li>
                         {% if request.user.is_superuser and request.user.is_staff %}
                         <li class="sidebar-item">
-                            <a href="#" class="text-warning">
+                            <a href="{% url 'employees' %}" class="text-warning">
                                 <i class="fas fa-user text-warning"></i>&nbsp;&nbsp;All Employees
                             </a>
                         </li>
@@ -39,7 +39,10 @@
                 </div>
             </div>
         </div>
+        <!-- DASHBOARD HOME BOXES -->
         {% block dahsboard-boxes %}{% endblock dahsboard-boxes %}
+        <!-- DISPLAY ALL EMPLOYEES -->
+        {% block employees %}{% endblock employees %}
     </div>
 </div>
 {% endblock content %}

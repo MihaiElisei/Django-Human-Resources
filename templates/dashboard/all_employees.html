@@ -1,0 +1,104 @@
+{% extends "dashboard.html" %}
+
+{% block employees %}
+<div class="col-md-10">
+    <div class="content">
+      <div class="container-fluid">                       
+        <!-- Search form -->
+        <div class="row" style="margin-bottom: 2.2rem;margin-top: 3rem;">
+          <div class="col-lg-12">
+            <form action="" method="GET">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default bg-dark text-warning" style="margin-right: 5px;" type="button">Search</button>
+                </span>
+                <input type="search" value="{{request.GET.search}}" name="search" class="form-control" placeholder="Search by First Name or Last Name..." style="border: 1px solid black; border-radius: 6px;">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>                
+      <!-- TABLE -->
+      <div class="table-responsive table-shadow">
+        <div class="text-center table-description">
+          <h4 class="title-h3 text-primary">ALL EMPLOYEES TABLE</h4>
+        </div>
+        <table class="table mt-5">
+          <thead style="text-align: center;">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Phone No.</th>
+              <th scope="col">Role</th>
+              <th scope="col">Department</th>
+              <th scope="col">Status</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody style="text-align: center;">
+            {% for employee in employee_list %}
+            <tr>
+              {% if employee.id %}
+                <th scope="row">{{ employee.id }}</th>
+              {% else %}
+                <th scope="row">-</th>
+              {% endif %}
+              <td>{{ employee.get_full_name }}</td>
+              <td>{{ employee.tel }}</td>
+              <td>{{ employee.role }}</td>
+              <td>{{ employee.department }}</td>
+              {% if employee.is_blocked %}
+              <td>Inactive</td>
+              {% else %}
+              <td>active</td>
+              {% endif %}
+              <td>{{ employee.created | date:'d/m/Y (H:i)' }}</td>
+              <td> 
+                <a href="/delete_employee/{{ employee.id }}" class="btn btn-info" title="Profile">
+                  <i class="fas fa-user"></i>
+                </a>
+                <a href="/employee/{{ employee.id }}" class="btn btn-primary" title="Edit Employee">
+                  <i class="fas fa-pen"></i>
+                </a>                       
+                <a href="/delete_employee/{{ employee.id }}" class="btn btn-danger" title="Delete Employee">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  
+        <!-- Pagination -->
+        <nav class="mt-5">
+          {% if employee_list.has_other_pages %}
+          <ul class="pagination justify-content-left">
+              {% if employee_list.has_previous %}
+              <a href="?page=1" class="btn btn-outline-primary mb-4" style="width: 60px; border-radius: 1px; border: 1px solid #d3d3d3;">First</a>
+              <li class="page-item"><a href="?page={{ employee_list.previous_page_number }}" class="page-link"><i class="fas fa-angle-double-left"></i></a></li>
+              {% else %}
+              <li class="page-item disabled"></li>
+              {% endif %}
+              
+              {% for i in employee_list.paginator.page_range %}
+                  {% if employee_list.number == i %}
+                  <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
+                  {% else %}
+                  <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                  {% endif %} 
+              {% endfor %}
+  
+              {% if employee_list.has_next %}
+              <li class="page-item"><a href="?page={{ employee_list.next_page_number }}" class="page-link"><i class="fas fa-angle-double-right"></i></a></li>           
+              <a href="?page={{ employee_list.paginator.num_pages }}" class="btn btn-outline-primary mb-4" style="width: 60px; border-radius: 1px; border: 1px solid #d3d3d3; border-left: none;">Last</a>
+              {% else %}
+              <li class="page-item disabled"></li>
+              {% endif %}
+          </ul>
+          {% endif %}
+      </nav>
+      </div>          
+    </div>  
+  </div>
+{% endblock employees %}

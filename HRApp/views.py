@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db.models import Q
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -205,3 +206,8 @@ def create_user(request):
 	dataset['form'] = form
 	dataset['title'] = 'register users'
 	return render(request,'account/create_user.html',dataset)
+
+# View all users
+def all_users(request):
+	employees = Employee.objects.all()
+	return render(request,'account/all_users.html',{'employees':employees,'title':'Users List'})

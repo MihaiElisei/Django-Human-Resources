@@ -7,7 +7,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    {% if request.user.is_superuser %}
+                    {% if request.user.is_superuser and request.user.is_staff %}
                     <div class="col">
                         <div class="employee-box sec-box">
                             <a href="">

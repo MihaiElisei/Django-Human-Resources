@@ -297,7 +297,9 @@ class Employee(models.Model):
  
     created = models.DateTimeField(verbose_name=_('Created'), auto_now_add=True, null=True)
     updated = models.DateTimeField(verbose_name=_('Updated'), auto_now=True, null=True)
-   
+    is_blocked = models.BooleanField(_('Is Blocked'),help_text='button to toggle employee block and unblock',default=False)
+    is_deleted = models.BooleanField(_('Is Deleted'),help_text='button to toggle employee deleted and undelete',default=False)
+
     class Meta:
         verbose_name = _('Employee')
         verbose_name_plural = _('Employees')

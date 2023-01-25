@@ -6,11 +6,11 @@ from django.contrib import messages
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from .forms import EmployeeCreateForm
+from .forms import EmployeeCreateForm, CreateUserForm
 from .models import *
 
 
-# Render Index Page
+# RENDER INDEX PAGE
 def index(request):
     return render(request, "index.html")
 
@@ -21,6 +21,8 @@ def index(request):
 def dashboard(request):
     return render(request, "dashboard/dashboard_home.html")
 
+
+# ------------------------EMPLOYEES
 
 # RENDER ALL EMPLOYEES
 def all_employees(request):
@@ -161,7 +163,7 @@ def employee_edit_data(request, id):
 
 		else:
 
-			messages.error(request,'Error Updating account',extra_tags = 'alert alert-warning alert-dismissible show')
+			messages.error(request, 'Error Updating account', extra_tags='alert alert-warning alert-dismissible show')
 			return HttpResponse("Form data not valid")
 
 	dataset = dict()
@@ -169,7 +171,6 @@ def employee_edit_data(request, id):
 	dataset['form'] = form
 	dataset['title'] = 'edit - {0}'.format(employee.get_full_name)
 	return render(request,'dashboard/add_employee.html',dataset)
-
 
 
 # DELETE EMPLOYEE
@@ -180,3 +181,27 @@ def delete_employee(request, id):
     employee.delete()
     messages.success(request, "Employee Deleted Successfully!")
     return redirect('/employees/')
+
+
+# -----------------------------USERS
+# CREATE NEW USER
+def create_user(request):
+	if request.method == 'POST':
+		form = CreateUserForm(data = request.POST)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			instance.save()
+			username = form.cleaned_data.get("username")
+
+			messages.success(request,'Account created for {0} !!!'.format(username),extra_tags = 'alert alert-success alert-dismissible show' )
+			return redirect('dashboard')
+		else:
+			messages.error(request,'Username or password is invalid',extra_tags = 'alert alert-warning alert-dismissible show')
+			return redirect('create_user')
+
+
+	form = CreateUserForm()
+	dataset = dict()
+	dataset['form'] = form
+	dataset['title'] = 'register users'
+	return render(request,'account/create_user.html',dataset)

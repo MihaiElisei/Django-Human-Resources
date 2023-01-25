@@ -18,5 +18,9 @@ urlpatterns = [
     # Edit Employee
     path('employee/profile/edit/<int:id>/', views.employee_edit_data, name='edit'),
     # Path to delete the employees 
-    path('delete_employee/<str:id>', views.delete_employee, name="delete_employee"),
+    path('delete_employee/<int:id>', views.delete_employee, name="delete_employee"),
+
+    # --------USERS----------
+    # Path to create User
+    path('create-user/', views.create_user, name='create_user'),
 ]

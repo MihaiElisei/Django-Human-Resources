@@ -252,6 +252,55 @@
         </div>
       </div>
     </div>
+    <!-- EMERGENCY INFORMATIONS -->
+    <div style="max-height: 40vh;">
+      <p>
+        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+            aria-expanded="false" aria-controls="collapseThree">
+            EMERGENCY INFORMATIONS
+        </button>
+      </p>
+      <div class="collapse" id="collapseThree"  style="margin-left: 10px;">
+        <div class="panel-body">
+          <div class="container-fluid">
+            <div class="row">
+              {% if emergency.fullname %}
+              <div class="list-group" id="list-tab" role="tablist">
+                <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Full Name:</span>&nbsp;&nbsp;{{ emergency.fullname }}
+                  </li>
+                  {% if emergency.tel %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Phone Number:</span>&nbsp;&nbsp;{{ emergency.tel }}
+                  </li>
+                  {% endif %}
+                  {% if emergency.location %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Residence:</span>&nbsp;&nbsp;{{ emergency.location }}
+                  </li>
+                  {% endif %}
+                  {% if emergency.relationship %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Relationship:</span>&nbsp;&nbsp;{{ emergency.relationship }}
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          {% else %}
+          <h4>
+            {% if request.user.is_superuser %}
+            <p class="no-information"> No Information found! To add information <span><a href="" class="add-information">Click Here</a></span></p>
+            {% else%}
+            <p>No Information found!</p>
+            {% endif %}
+          </h4>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>  
 </div>

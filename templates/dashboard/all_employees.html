@@ -1,7 +1,7 @@
 {% extends "dashboard.html" %}
 
 {% block employees %}
-<div class="col-md-10">
+<div class="col-md-10 dahsboard-color">
     <div class="content">
       <div class="container-fluid">                       
         <!-- Search form -->
@@ -10,9 +10,9 @@
             <form action="" method="GET">
               <div class="input-group">
                 <span class="input-group-btn">
-                  <button class="btn btn-default bg-dark text-warning" style="margin-right: 5px;" type="button">Search</button>
+                  <button class="btn btn-default teal-color beige-color" style="margin-right: 5px;" type="button">Search</button>
                 </span>
-                <input type="search" value="{{request.GET.search}}" name="search" class="form-control" placeholder="Search by First Name or Last Name..." style="border: 1px solid black; border-radius: 6px;">
+                <input type="search" value="{{request.GET.search}}" name="search" class="form-control search" placeholder="Search by First Name or Last Name...">
               </div>
             </form>
           </div>
@@ -21,7 +21,7 @@
       <!-- TABLE -->
       <div class="table-responsive table-shadow">
         <div class="text-center table-description">
-          <h4 class="title-h3 text-primary">ALL EMPLOYEES TABLE</h4>
+          <h4 class="table-title">ALL EMPLOYEES TABLE</h4>
         </div>
         <table class="table mt-5">
           <thead style="text-align: center;">

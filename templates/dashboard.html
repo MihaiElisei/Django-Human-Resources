@@ -1,46 +1,46 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2" style="padding: 0;" >
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-white" style="background-color:#212529;">
-                <div class="sidebar-wrapper">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 " style="min-height:91vh">
+        <div class="col-md-2 padding-0">
+            <div class="d-flex flex-column flex-shrink-0 p-3  beige-color teal-color">
+                <div class="sidebar-wrapper" >
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="min-height:100vh;">
                         <li class="active sidebar-item mt-5">
-                            <a href="{% url 'dashboard' %}" class="text-warning">
-                                <i class="fas fa-chart-line text-warning"></i>&nbsp;&nbsp;Dashboard 
+                            <a href="{% url 'dashboard' %}">
+                                <i class="fas fa-chart-line"></i>&nbsp;&nbsp;Dashboard 
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="text-warning">
-                                <i class="fas fa-id-card text-warning"></i></i></i>&nbsp;&nbsp;User Profile
+                            <a href="{% url 'userprofile' %}">
+                                <i class="fas fa-id-card"></i></i></i>&nbsp;&nbsp;My Profile
                             </a>
                         </li>
                         {% if request.user.is_superuser and request.user.is_staff %}
                         <li class="sidebar-item">
-                            <a href="{% url 'employees' %}" class="text-warning">
-                                <i class="fas fa-user text-warning"></i>&nbsp;&nbsp;All Employees
+                            <a href="{% url 'employees' %}">
+                                <i class="fas fa-user"></i>&nbsp;&nbsp;All Employees
                             </a>
                         </li>
                         {% endif %}
                         <li class="sidebar-item">
-                            {% if request.user.is_superuser %}<a href="#" class="text-warning">{% else %}<a href="#" class="text-warning"> {% endif %}
-                                <i class="fas fa-plane-departure text-warning"></i></i>&nbsp;&nbsp;Leave
+                            {% if request.user.is_superuser %}<a href="#">{% else %}<a href="#"> {% endif %}
+                                <i class="fas fa-plane-departure"></i></i>&nbsp;&nbsp;Leave
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="text-warning">
-                                <i class="fas fa-birthday-cake text-warning"></i></i>&nbsp;&nbsp;Birthday
+                            <a href="#">
+                                <i class="fas fa-birthday-cake"></i></i>&nbsp;&nbsp;Birthday
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- DASHBOARD HOME BOXES -->
-        {% block dahsboard-boxes %}{% endblock dahsboard-boxes %}
+        
+        <!-- DASHBOARD HOME -->
+        {% block dahsboard-home %}{% endblock dahsboard-home %}
         <!-- DISPLAY ALL EMPLOYEES -->
         {% block employees %}{% endblock employees %}
         <!-- ADD EMPLOYEE -->
@@ -49,6 +49,8 @@
         {% block create_user %}{% endblock create_user %}
         <!-- VIEW ALL USERS -->
         {% block all_users %}{% endblock all_users %}
+        <!-- USER PROFILE -->
+        {% block user_profile %}{% endblock user_profile %}  
     </div>
 </div>
 {% endblock content %}

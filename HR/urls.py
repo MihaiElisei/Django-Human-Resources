@@ -23,6 +23,8 @@ urlpatterns = [
     # --------USERS----------
     # Path to create User
     path('create-user/', views.create_user, name='create_user'),
-    # View all users
-    path('users/all', views.all_users, name='all_users'),
+    # Path to all users
+    path('users/all/', views.all_users, name='all_users'),
+    # Path to user profile
+    path('user-profile/', views.user_profile, name='userprofile'),
 ]

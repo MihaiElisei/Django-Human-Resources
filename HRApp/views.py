@@ -207,7 +207,29 @@ def create_user(request):
 	dataset['title'] = 'register users'
 	return render(request,'account/create_user.html',dataset)
 
-# View all users
+# VIEW ALL USERS
 def all_users(request):
 	employees = Employee.objects.all()
 	return render(request,'account/all_users.html',{'employees':employees,'title':'Users List'})
+
+
+# USER PROFILE
+def user_profile(request):
+	'''
+	user profile view
+	'''
+	user = request.user
+	if user.is_authenticated:
+		employee = Employee.objects.filter(user = user).first()
+		emergency = Emergency.objects.filter(employee = employee).first()
+		relationship = Relationship.objects.filter(employee = employee).first()
+		bank = Bank.objects.filter(employee = employee).first()
+
+		dataset = dict()
+		dataset['employee'] = employee
+		dataset['emergency'] = emergency
+		dataset['family'] = relationship
+		dataset['bank'] = bank
+
+		return render(request,'dashboard/user_profile.html',dataset)
+	return HttpResponse("Sorry , not authenticated for this,admin or whoever you are :)")

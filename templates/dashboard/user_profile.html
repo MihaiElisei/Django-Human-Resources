@@ -1,0 +1,259 @@
+{% extends 'dashboard.html' %}
+
+
+{% block user_profile %}
+<div class="col-md-10 dahsboard-color padding-0">
+  <div class="row">
+    <!-- USERNAME -->
+    <div class="row">
+      <div class="text-center" style="padding: 20px;">
+        <h3>
+          <span class="table-title">{{ employee.get_full_name}}</span>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid d-flex p-2">
+    <div class="container teal-color" style="width:30%; margin:0; min-height: 70vh; border-radius: 5px;">
+      <div class="text-centered" style="min-height: 70vh;">
+        <ul class="list-group text-medium" style="min-height: 70vh;">
+            <li class="list-group-item teal-color beige-color profile-list">
+                <span>Full Name:</span>&nbsp;&nbsp;{{ employee.get_full_name }}
+            </li>
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Nationality:</span>&nbsp;&nbsp;{{ employee.nationality}}
+            </li>
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Email:</span>&nbsp;&nbsp;{{ employee.email}}
+            </li>
+            <li class="list-group-item  teal-color beige-color profile-list ">
+                <span>Department:</span>&nbsp;&nbsp;{{ employee.department}}
+            </li>
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Employment Type:</span>&nbsp;&nbsp;{{ employee.employeetype}}
+            </li>
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Role:</span>&nbsp;&nbsp;{{ employee.role}}
+            </li>
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Date of Birth:</span>&nbsp;&nbsp;{{ employee.birthday}}
+            </li>
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Age:</span>&nbsp;&nbsp;{{ employee.get_age }}
+            </li>
+            {% if employee.is_blocked %}
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Status:</span>&nbsp;&nbsp;<span style="color: red;">Inactive</span> 
+            </li>
+            {% else %}
+            <li class="list-group-item  teal-color beige-color profile-list">
+                <span>Status:</span>&nbsp;&nbsp;<span style="color: green;">Active</span> 
+            </li>
+            {% endif %}
+        </ul>
+      </div>
+    </div>
+    <!-- PERSONAL DETAILS -->
+    <div class="container teal-color" style="width:65%; margin:0; margin-left: 10px; border-radius: 5px;">
+      <div style="max-height: 50vh;">
+      <p>
+        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="false" aria-controls="collapseOne">
+            PERSONAL INFORMATIONS
+        </button>
+      </p>
+      <div class="collapse" id="collapseOne" style="margin-left: 10px;">
+        <div class="panel-body">
+          <div class="container-fluid">
+            <div class="row">
+              {% if employee %}
+              <div class="list-group" id="list-tab" role="tablist">
+                <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Title:</span>&nbsp;&nbsp;{{ employee.title }}
+                  </li>
+                  {% if employee.firstname %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>First Name:</span>&nbsp;&nbsp;{{ employee.firstname}}
+                  </li>
+                  {% endif %}
+                  {% if employee.lastname %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Last Name:</span>&nbsp;&nbsp;{{ employee.lastname }}
+                  </li>
+                  {% endif %}
+                  {% if employee.othername %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Other Name:</span>&nbsp;&nbsp;{{ employee.othername }}
+                  </li>
+                  {% endif %}
+                  {% if employee.sex %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Sex:</span>&nbsp;&nbsp;{{ employee.sex }}
+                  </li>
+                  {% endif %}
+                  {% if employee.email %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Email:</span>&nbsp;&nbsp;{{ employee.email }}
+                  </li>
+                  {% endif %}
+                  {% if employee.tel %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Phone Number:</span>&nbsp;&nbsp;{{ employee.tel }}
+                  </li>
+                  {% endif %}
+                  {% if employee.birthday %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Date of Birth:</span>&nbsp;&nbsp;{{ employee.birthday }}
+                  </li>
+                  {% endif %}
+                  {% if employee.employeeid %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Employee ID:</span>&nbsp;&nbsp;{{ employee.employeeid }}
+                  </li>
+                  {% endif %}
+                  {% if employee.dateissued %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Date Issued (Employee ID):</span>&nbsp;&nbsp;{{ employee.dateissued }}
+                  </li>
+                  {% endif %}
+                  {% if employee.nationality %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Nationality:</span>&nbsp;&nbsp;{{ employee.nationality }}
+                  </li>
+                  {% endif %}
+                  {% if employee.address %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Address:</span>&nbsp;&nbsp;{{ employee.address }}
+                  </li>
+                  {% endif %}
+                  {% if employee.education %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Highest Education:</span>&nbsp;&nbsp;{{ employee.education }}
+                  </li>
+                  {% endif %}
+                  {% if employee.lastwork %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Last Place of Work:</span>&nbsp;&nbsp;{{ employee.lastwork }}
+                  </li>
+                  {% endif %}
+                  {% if employee.position %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Position (last place of work):</span>&nbsp;&nbsp;{{ employee.position }}
+                  </li>
+                  {% endif %}
+                  {% if employee.startdate %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Employement Date:</span>&nbsp;&nbsp;{{ employee.startdate }}
+                  </li>
+                  {% endif %}
+                  {% if request.user.is_superuser %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <a href="#">Edit</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+            {% else %}
+            <h4>
+              {% if request.user.is_superuser %}
+              <p class="no-information"> No Information found! To add information <span><a href="" class="add-information">Click Here</a></span></p>
+              {% else%}
+              <p>No Information found!</p>
+              {% endif %}
+            </h4>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FAMILY INFORMATIONS -->
+    <div style="max-height: 40vh;">
+      <p>
+        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+            aria-expanded="false" aria-controls="collapseTwo">
+            FAMILY INFORMATIONS
+        </button>
+      </p>
+      <div class="collapse" id="collapseTwo"  style="margin-left: 10px;">
+        <div class="panel-body">
+          <div class="container-fluid">
+            <div class="row">
+              {% if family %}
+              <div class="list-group" id="list-tab" role="tablist">
+                <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Status:</span>&nbsp;&nbsp;{{ family.status }}
+                  </li>
+                  {% if family.spouse %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Spouse Name:</span>&nbsp;&nbsp;{{ family.spouse}}
+                  </li>
+                  {% endif %}
+                  {% if family.occupation %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Spouse( Occupation ):</span>&nbsp;&nbsp;{{ family.occupation }}
+                  </li>
+                  {% endif %}
+                  {% if family.tel %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Spouse (Phone Number):</span>&nbsp;&nbsp;{{ family.tel }}
+                  </li>
+                  {% endif %}
+                  {% if family.children %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Number of Children:</span>&nbsp;&nbsp;{{ family.children }}
+                  </li>
+                  {% endif %}
+                  {% if family.nextofkin %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Next of Kin (Contact):</span>&nbsp;&nbsp;{{ family.nextofkin }}
+                  </li>
+                  {% endif %}
+                  {% if family.contact %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Phone Number:</span>&nbsp;&nbsp;{{ family.contact }}
+                  </li>
+                  {% endif %}
+                  {% if family.relationship %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Relationship with Next of Kin:</span>&nbsp;&nbsp;{{ family.relationship }}
+                  </li>
+                  {% endif %}
+                  {% if family.father %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Father Name:</span>&nbsp;&nbsp;{{ family.father }}
+                  </li>
+                  {% endif %}
+                  {% if family.mother %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Mother Name:</span>&nbsp;&nbsp;{{ family.mother }}
+                  </li>
+                  {% endif %}
+                  {% if request.user.is_superuser %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <a href="#">Edit</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          {% else %}
+          <h4>
+            {% if request.user.is_superuser %}
+            <p class="no-information"> No Information found! To add information <span><a href="" class="add-information">Click Here</a></span></p>
+            {% else%}
+            <p>No Information found!</p>
+            {% endif %}
+          </h4>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>  
+</div>
+
+{% endblock user_profile %}

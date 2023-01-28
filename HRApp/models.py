@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from phonenumber_field.modelfields import PhoneNumberField
+import datetime
 
 
 # NATIONALITY MODEL

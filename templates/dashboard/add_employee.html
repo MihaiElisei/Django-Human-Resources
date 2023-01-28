@@ -3,38 +3,22 @@
 
 
 {% block add_employee %}
-<div class="col-md-10">
+<div class="col-md-10 dahsboard-color">
     <div class="content">
         <div class="container-fluid">
-                <!-- <div class="row">
-                    <div class="col col-sm-8 offset-sm-2">
-                        {% if  messages %}
-                                {% for message in messages %}
-                                 <div {% if message.tags %} class="{{ message.tags}}"{% endif %}>
-                                     {{ message }}
-                                     <button type="button" class="close" id ="override-start"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                     </button>
-                                 </div>
-                                {% endfor %}
-                        {% endif %}
-
-                    </div>
-                </div> -->
-       
-            <div class="form-wrapper" style="max-height: 80vh; overflow: scroll;">
-
+            <div class="form-wrapper scroll-form">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                        <h3 class="p-3">Add Employee</h3>
+                        <h3 class="p-3 table-title">Add Employee</h3>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-8 col-md-12 col-sm-12 add-form" >
+                    <div class="col-lg-10 col-md-12 col-sm-12 center-form">
                         <form action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{form | crispy }}
-                            <button type="submit" class="btn btn-primary btn-md btn-block mb-3">Submit</button>
+                            <button type="submit" class="btn btn-md btn-block mb-3 btn-submit">Submit</button>
                         </form>
                     </div>
                 </div>

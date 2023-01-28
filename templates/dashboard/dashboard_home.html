@@ -1,58 +1,12 @@
 {% extends 'dashboard.html' %}
 
-{% block dahsboard-boxes %}
-<!-- DASHBOARD BOXES -->
-<div class="col-md-10">
-    <div class="row">
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    {% if request.user.is_superuser and request.user.is_staff %}
-                    <div class="col">
-                        <div class="employee-box sec-box">
-                            <a href="">
-                            <span>Employees</span>
-                            </a>
-                            <span class="count-object">0</span> 
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="leave-box sec-box">
-                            <a href="">
-                            <span>Leaves</span>
-                            </a>
-                            <span class="count-object" style="color:#FF883E;">0</span> 
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="birthday-box sec-box">
-                            <a href="">
-                            <span>Birthdays</span>
-                            </a>
-                            <span class="count-object">0</span>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div class="col col-lg-6">
-                        <div class="leave-box sec-box">
-                            <a href="">
-                            <span>Leaves</span>
-                            </a>
-                            <span class="count-object" style="color:#41b6d6;"></span> 
-                        </div>
-                    </div>
-                    <div class="col col-lg-6">
-                        <div class="birthday-box sec-box">
-                            <a href="">
-                            <span>Birthdays</span>
-                            </a>
-                            <span class="count-object"></span>
-                        </div>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>           
-        </div>
-    </div>  
+{% block dahsboard-home %}
+<div class="col-md-10 padding-0 dahsboard-color">
+    <div class="home-logo">
+        <i class="fas fa-users-cog logo"></i>
+    </div>
+    <div class="home-tile">
+        <h1 class="title"><a href="">WELCOME TO HR</a></h1>
+    </div>
 </div> 
-{% endblock dahsboard-boxes %}
+{% endblock dahsboard-home %}

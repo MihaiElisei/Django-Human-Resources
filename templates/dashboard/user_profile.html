@@ -14,9 +14,9 @@
     </div>
   </div>
   <div class="container-fluid d-flex p-2">
-    <div class="container teal-color" style="width:30%; margin:0; min-height: 70vh; border-radius: 5px;">
-      <div class="text-centered" style="min-height: 70vh;">
-        <ul class="list-group text-medium" style="min-height: 70vh;">
+    <div class="container teal-color" style="width:30%; margin:0; min-height: 75vh; border-radius: 5px;">
+      <div class="text-centered">
+        <ul class="list-group text-medium">
             <li class="list-group-item teal-color beige-color profile-list">
                 <span>Full Name:</span>&nbsp;&nbsp;{{ employee.get_full_name }}
             </li>
@@ -283,6 +283,55 @@
                   {% if emergency.relationship %}
                   <li class="list-group-item teal-color beige-color profile-list">
                     <span>Relationship:</span>&nbsp;&nbsp;{{ emergency.relationship }}
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          {% else %}
+          <h4>
+            {% if request.user.is_superuser %}
+            <p class="no-information"> No Information found! To add information <span><a href="" class="add-information">Click Here</a></span></p>
+            {% else%}
+            <p>No Information found!</p>
+            {% endif %}
+          </h4>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- BANK INFORMATIONS -->
+    <div style="max-height: 40vh;">
+      <p>
+        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
+            aria-expanded="false" aria-controls="collapseFour">
+            BANK INFORMATIONS
+        </button>
+      </p>
+      <div class="collapse" id="collapseFour"  style="margin-left: 10px;">
+        <div class="panel-body">
+          <div class="container-fluid">
+            <div class="row">
+              {% if bank.name %}
+              <div class="list-group" id="list-tab" role="tablist">
+                <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Bank Name:</span>&nbsp;&nbsp;{{ bank.name }}
+                  </li>
+                  {% if bank.account %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Account No.:</span>&nbsp;&nbsp;{{ bank.account }}
+                  </li>
+                  {% endif %}
+                  {% if bank.branch %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Branch:</span>&nbsp;&nbsp;{{ bank.branch }}
+                  </li>
+                  {% endif %}
+                  {% if bank.salary %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <span>Sallary:</span>&nbsp;&nbsp;{{ bank.salary }}
                   </li>
                   {% endif %}
                 </ul>

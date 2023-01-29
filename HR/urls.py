@@ -40,4 +40,7 @@ urlpatterns = [
     path('bank/create/', views.bank_form, name='bank_form'),
     # Path to birthdays page
     path('birthdays/', views.birthdays, name='birthdays'),
+
+    # --------LEAVES----------
+    path('leave/apply/', views.create_leave, name='create_leave'),
 ]

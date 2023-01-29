@@ -40,7 +40,7 @@ class BankAccountForm(forms.ModelForm):
 
 
 # CREATE LEAVE FORM
-class LeaveCreationForm(forms.ModelForm):
+class CreateLeave(forms.ModelForm):
 	reason = forms.CharField(required=False, widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
 
 	class Meta:

@@ -438,3 +438,30 @@ def birthdays(request):
 	'title':'Birthdays'
 	}
 	return render(request,'dashboard/birthdays.html',context)
+
+
+# -----------------------------LEAVE
+
+
+def create_leave(request):
+	if not request.user.is_authenticated:
+		return redirect('/')
+	if request.method == 'POST':
+		form = CreateLeave(data = request.POST)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			user = request.user
+			instance.user = user
+			instance.save()
+
+			messages.success(request,'Leave Request Sent,wait for Human Resource Managers response',extra_tags = 'alert alert-success alert-dismissible show')
+			return redirect('create_leave')
+		else:
+			messages.error(request,'failed to Request a Leave,please check entry dates',extra_tags = 'alert alert-warning alert-dismissible show')
+			return redirect('create_leave')
+
+	dataset = dict()
+	form = CreateLeave()
+	dataset['form'] = form
+	dataset['title'] = 'Apply for Leave'
+	return render(request,'dashboard/create_leave.html',dataset)

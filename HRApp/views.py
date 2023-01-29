@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import *
 from .models import *
-from .manager import EmployeeManager
+from .manager import *
 
 
 # RENDER INDEX PAGE

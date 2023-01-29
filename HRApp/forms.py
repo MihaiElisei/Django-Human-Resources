@@ -1,5 +1,5 @@
 from django import forms
-from .models import Role, Department, Nationality, Employee, Emergency, Relationship, Bank
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -37,3 +37,12 @@ class BankAccountForm(forms.ModelForm):
 	class Meta:
 		model = Bank
 		fields = ['employee', 'name', 'branch', 'account', 'salary']
+
+
+# CREATE LEAVE FORM
+class LeaveCreationForm(forms.ModelForm):
+	reason = forms.CharField(required=False, widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
+
+	class Meta:
+		model = Leave
+		exclude = ['user', 'defaultdays', 'hrcomments', 'status', 'is_approved', 'updated', 'created']

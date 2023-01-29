@@ -350,3 +350,41 @@ def family_form(request):
 	dataset['form'] = form
 	dataset['title'] = 'Family Form'
 	return render(request,'dashboard/family.html',dataset)
+
+
+# EDIT FAMILY DETAILS
+def family_edit(request,id):
+	if not (request.user.is_authenticated and request.user.is_authenticated):
+		return redirect('/')
+	relation = get_object_or_404(Relationship, id = id)
+	employee = relation.employee
+
+	if request.method == 'POST':
+		form = FamilyForm(data = request.POST, instance = relation)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			instance.employee = employee
+			instance.status = request.POST.get('status')
+			instance.spouse = request.POST.get('spouse')
+			instance.occupation = request.POST.get('occupation')
+			instance.tel = request.POST.get('tel')
+			instance.children = request.POST.get('children')
+			instance.nextofkin = request.POST.get('nextofkin')
+			instance.contact = request.POST.get('contact')
+			instance.relationship = request.POST.get('relationship')
+			instance.father = request.POST.get('father')
+			instance.mother = request.POST.get('mother')
+	
+			instance.save()
+
+			messages.success(request,'Relationship Successfully Updated for {0}'.format(employee.get_full_name),extra_tags = 'alert alert-success alert-dismissible show')
+			return redirect('employees')
+		else:
+			messages.error(request,'Failed to update Relationship for {0}'.format(employee.get_full_name),extra_tags = 'alert alert-warning alert-dismissible show')
+			return redirect('family_form')
+	dataset = dict()
+	form = FamilyForm(request.POST or None,instance = relation)
+
+	dataset['form'] = form
+	dataset['title'] = 'Update Family Details'
+	return render(request,'dashboard/family.html',dataset)

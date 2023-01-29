@@ -233,7 +233,7 @@
                   {% endif %}
                   {% if request.user.is_superuser %}
                   <li class="list-group-item teal-color beige-color profile-list">
-                    <a href="#" class="add-information">Edit</a>
+                    <a href="{% url 'family_edit' family.id %}" class="add-information">Edit</a>
                   </li>
                   {% endif %}
                 </ul>

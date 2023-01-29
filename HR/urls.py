@@ -34,4 +34,6 @@ urlpatterns = [
     path('emergency/edit/<int:id>', views.emergency_edit, name='emergency_edit'),
     # Path to family form
     path('family/create/', views.family_form, name='family_form'),
+    # Path to edit family details
+    path('family/edit/<int:id>', views.family_edit, name='family_edit'),
 ]

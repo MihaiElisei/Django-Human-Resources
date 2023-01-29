@@ -46,4 +46,9 @@ urlpatterns = [
     path('leave/apply/', views.create_leave, name='create_leave'),
     # Path to see all pending leaves
     path('leaves/all/', views.all_leaves, name='leaves_list'),
+    # Path to leaves action page
+    path('leaves/all/action/<int:id>/', views.leaves_action, name='leaves_action'),
+    # Path to approve leave
+    path('leave/approve/<int:id>/', views.approve_leave, name='aprove_leave'),
+    # Path to unaporove leave
 ]

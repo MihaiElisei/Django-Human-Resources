@@ -424,3 +424,15 @@ class Leave(models.Model):
             return
         dates = (enddate - startdate)
         return dates.days
+
+    @property
+    def leave_approved(self):
+        return self.is_approved == True
+
+    @property
+    def approve_leave(self):
+        if not self.is_approved:
+            self.is_approved = True
+            self.status = 'approved'
+            self.save()
+        return 

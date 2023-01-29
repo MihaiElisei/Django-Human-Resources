@@ -1,0 +1,62 @@
+{% extends 'dashboard.html' %}
+
+
+{% block leaves_actions %}
+<div class="col-md-10 dahsboard-color padding-0">
+    <div class="row">
+        <div class="row">
+            <div class="text-center" style="padding: 20px;">
+              <h3>
+                <span class="table-title" style="text-transform: uppercase;">{{ leave.user }}</span>
+              </h3>
+            </div>
+        </div>
+        <div class="container teal-color" style="width:40%; margin:0 auto; border-radius: 5px;">
+            <div class="text-centered">
+                <ul class="list-group text-medium">
+                    <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Full Name:</span>&nbsp;&nbsp;{{ employee.get_full_name }}
+                    </li>
+                    <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Department:</span>&nbsp;&nbsp;{{ employee.department }}
+                    </li>
+                    <li class="list-group-item  teal-color beige-color profile-list">
+                        <span>Leave Start Date:</span>&nbsp;&nbsp;{{ leave.startdate }}
+                    </li>
+                    <li class="list-group-item  teal-color beige-color profile-list">
+                        <span>Leave End Date:</span>&nbsp;&nbsp;{{ leave.enddate }}
+                    </li>
+                    <li class="list-group-item  teal-color beige-color profile-list ">
+                        <span>Duration:</span>&nbsp;&nbsp;{{ leave.leave_days }}&nbsp; days
+                    </li>
+                    <li class="list-group-item  teal-color beige-color profile-list">
+                        <span>Leave Type:</span>&nbsp;&nbsp;{{ leave.leavetype }}
+                    </li>
+                    <li class="list-group-item  teal-color beige-color profile-list">
+                        <span>Reason:</span>&nbsp;&nbsp;{{ leave.reason }}
+                    </li>
+                    <li class="list-group-item  teal-color beige-color profile-list">
+                        <span>Status:</span>&nbsp;&nbsp;{{ leave.status }}
+                    </li>                 
+                    <li class="list-group-item  teal-color beige-color profile-list">
+                        <span>Requested on:</span>&nbsp;&nbsp;{{ leave.created }}
+                    </li>                 
+                </ul>
+            </div>
+            {% if request.user.is_superuser and request.user.is_staff %}
+            <div class="row">
+                    <div class="btn-group btn-group-justified p-3">
+                        {% if leave.leave_approved %}
+                        <a href="#" class="btn btn-success" name='unapprove'>UNAPPROVE</a>
+                        {% else %}
+                        <a href="{% url 'aprove_leave' leave.id %}" class="btn btn-success" name='approve'>APPROVE</a>
+                        {% endif %}
+                        
+                        <a href="#" class="btn btn-danger" name='reject'>REJECT</a>  
+                    </div>  
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock leaves_actions %}

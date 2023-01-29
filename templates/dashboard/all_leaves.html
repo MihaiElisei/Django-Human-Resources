@@ -27,7 +27,7 @@
                 <td>{{ leave.leavetype}}</td>
                 <td>{{ leave.leave_days }}</td>
                 <td>{{ leave.status }}</td>
-                <td><a href="#"><span>view</span></a></td>
+                <td><a href="{% url 'leaves_action' leave.id %}"><span>Actions</span></a></td>
               </tr>
               {% endfor %}
             </tbody>

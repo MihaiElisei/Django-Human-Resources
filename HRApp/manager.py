@@ -9,21 +9,15 @@ class EmployeeManager(models.Manager):
         Every month list all employees whose birthday is in that month.
         '''
         current_date = datetime.date.today()
-        return super().get_queryset().filter(is_blocked = False).filter(birthday__month = current_date.month)
+        return super().get_queryset().filter(is_blocked=False).filter(birthday__month=current_date.month)
 
 
 class LeaveManager(models.Manager):
 	def get_queryset(self):
-		'''
-		overrides objects.all() 
-		return all leaves including pending or approved
-		'''
 		return super().get_queryset()
 
 
-
-	def all_pending_leaves(self):
-		return super().get_queryset().filter(status = 'pending').order_by('-created')
+	
 
 
 

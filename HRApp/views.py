@@ -473,3 +473,25 @@ def all_leaves(request):
 		return redirect('/')
 	leaves = Leave.objects.all_pending_leaves()
 	return render(request,'dashboard/all_leaves.html',{'leave_list':leaves,'title':'leaves list - pending'})
+
+# LEAVE ACTION
+def leaves_action(request,id):
+	if not (request.user.is_authenticated):
+		return redirect('/')
+
+	leave = get_object_or_404(Leave, id = id)
+	employee = Employee.objects.filter(user = leave.user)[0]
+	return render(request,'dashboard/leave_action.html',{'leave':leave,'employee':employee,'title':'{0}-{1} leave'.format(leave.user.username,leave.status)})
+
+
+# APROVE LEAVE
+def approve_leave(request,id):
+	if not (request.user.is_superuser and request.user.is_authenticated):
+		return redirect('/')
+	leave = get_object_or_404(Leave, id = id)
+	user = leave.user
+	employee = Employee.objects.filter(user = user)[0]
+	leave.approve_leave
+
+	messages.error(request,'Leave successfully approved for {0}'.format(employee.get_full_name),extra_tags = 'alert alert-success alert-dismissible show')
+	return redirect('leaves_action', id = id)

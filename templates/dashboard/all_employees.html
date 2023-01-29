@@ -55,7 +55,7 @@
               {% endif %}
               <td>{{ employee.created | date:'d/m/Y (H:i)' }}</td>
               <td> 
-                <a href="#" class="btn btn-info" title="Profile">
+                <a href="{% url 'employeeinfo' employee.id %}" class="btn btn-info" title="Profile">
                   <i class="fas fa-user"></i>
                 </a>
                 <a href="/employee/profile/edit/{{ employee.id }}" class="btn btn-primary" title="Edit Employee">

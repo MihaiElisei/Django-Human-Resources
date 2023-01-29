@@ -27,4 +27,5 @@ urlpatterns = [
     path('users/all/', views.all_users, name='all_users'),
     # Path to user profile
     path('user-profile/', views.user_profile, name='userprofile'),
+    path('employee/profile/<int:id>/', views.user_detail, name='employeeinfo'),
 ]

@@ -3,42 +3,27 @@
 
 
 {% block create_user %}
-    <div class="col-md-10">
+    <div class="col-md-10 dahsboard-color">
         <div class="content">
             <div class="container-fluid">
                 <div class="form-wrapper" style="max-height: 85vh; overflow: scroll;">
                     <div class="row">
-                        <div class="col col-sm-8 offset-sm-2">
-
-                            {% if  messages %}
-                                    {% for message in messages %}
-                                     <div {% if message.tags %} class="{{ message.tags}}"{% endif %}>
-                                         {{ message }}
-                                         <button type="button" class="close" id = "override-start"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                         </button>
-                                     </div>
-                                    {% endfor %}
-                            {% endif %}
-
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                            <h3 class="title-h3">Add User</h3>
-                            <p>A user must be created before adding as an employee to the system</p>
+                            <h3 class="title-h3 table-title">Add User</h3>
+                            <p class="subtitle">A user must be created before adding as an employee to the system</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 center-form">
                             <form action="" method="POST">
                                 {% csrf_token %}
                                 {{form | crispy }}
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                                <button type="submit" class="btn btn-md btn-block mb-3 btn-submit">Submit</button>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div> <!-- /container --> 
+            </div> 
         </div>
     </div>
 {% endblock create_user %}

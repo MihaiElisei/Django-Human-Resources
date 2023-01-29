@@ -1,62 +1,44 @@
 {% extends 'dashboard.html' %}
 
 {% block all_users %}
-    <div class="col-md-10">
-        <section class="content">
-
-            <section class="container-fluid">
-                	<!-- TABLE -->
-                	<div class="table-shadow">
-                		<div class="text-center table-description">
-                			<h4 class="title-h3">Application Users</h4>
-                		</div>
-                		<div class="container-fluid">
-                		</div>
-                		<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col">Username</th>
-							      <th scope="col">Employee (fullname) </th>
-							      <th scope="col">Department</th>
-							      <th scope="col">Status</th>
-							      <th scope="col">Actions</th>
-							    </tr>
-							  </thead>
-
-							  <tbody>
-							  	{% for user in employees %}
-							  	<tr>
-								      <td>{{user.user.username}}</td>
-								      <td>{{ user.get_full_name }}</td>
-								      <td>{{ user.department }}</td>
-								      {% if user.user.is_active %}
-								      <td>active</td>
-								      {% else %}
-								      <td>inactive</td>
-								      {% endif %}
-
-								      {%  if user.user.is_active and user.user.is_superuser %}
-								      <!-- Admin cannot block self -->
-								      <td style="font-style:italic;">(admin)</td>
-								      {% elif user.user.is_active %}
-								      <td><a href="#" title="block user"><i class="pe-7s-unlock"></i></a></td>
-								      {% else %}
-								      <td><a href="#" title="unblock user"><i class="pe-7s-lock"></i></a></td>
-								      {% endif %}
-
-
-								      
-								   
-							  </tr>
-							   {% endfor %}
-							  </tbody>
-						</table>
-					</div>
-                	<!-- /TABLE -->
-
-            </section> <!-- /container --> 
-
-
-        </section>
+    <div class="col-md-10 dahsboard-color p-5">
+		<div class="table-responsive table-shadow">
+			<div class="text-center table-description">
+			  <h4 class="table-title">ALL USERS TABLE</h4>
+			</div>
+			<table class="table mt-5">
+				<thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Employee (fullname) </th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+				<tbody>
+                    {% for user in employees %}
+                    <tr>
+                        <td>{{user.user.username}}</td>
+                        <td>{{ user.get_full_name }}</td>
+                        <td>{{ user.department }}</td>
+                        {% if user.user.is_active %}
+                        <td>active</td>
+                        {% else %}
+                        <td>inactive</td>
+                        {% endif %}
+                        {%  if user.user.is_active and user.user.is_superuser %}
+                        <!-- Admin cannot block self -->
+                        <td style="font-style:italic;">(admin)</td>
+                        {% elif user.user.is_active %}
+                        <td><a href="#" title="block user"><i class="fas fa-lock-open" style="color: #0E5E6F;"></i></a></td>
+                        {% else %}
+                        <td><a href="#" title="unblock user"><i class="fas fa-lock" style="color: #0E5E6F;"></i></a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+			</table>
+		</div>	
     </div>
 {% endblock all_users %}

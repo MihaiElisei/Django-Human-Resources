@@ -195,7 +195,7 @@ def create_user(request):
 			username = form.cleaned_data.get("username")
 
 			messages.success(request,'Account created for {0} !!!'.format(username),extra_tags = 'alert alert-success alert-dismissible show' )
-			return redirect('dashboard')
+			return redirect('users/all/')
 		else:
 			messages.error(request,'Username or password is invalid',extra_tags = 'alert alert-warning alert-dismissible show')
 			return redirect('create_user')
@@ -215,9 +215,6 @@ def all_users(request):
 
 # USER PROFILE
 def user_profile(request):
-	'''
-	user profile view
-	'''
 	user = request.user
 	if user.is_authenticated:
 		employee = Employee.objects.filter(user = user).first()
@@ -233,3 +230,22 @@ def user_profile(request):
 
 		return render(request,'dashboard/user_profile.html',dataset)
 	return HttpResponse("Sorry , not authenticated for this,admin or whoever you are :)")
+
+	
+# USERS DETAILS
+def user_detail(request,id):
+	if not request.user.is_authenticated:
+		return redirect('/')
+	
+	employee = get_object_or_404(Employee, id = id)
+	employee_emergency_instance = Emergency.objects.filter(employee = employee).first()
+	employee_family_instance = Relationship.objects.filter(employee = employee).first()
+	bank_instance = Bank.objects.filter(employee = employee).first()
+	
+	dataset = dict()
+	dataset['employee'] = employee
+	dataset['emergency'] = employee_emergency_instance
+	dataset['family'] = employee_family_instance
+	dataset['bank'] = bank_instance
+	dataset['title'] = 'profile - {0}'.format(employee.get_full_name)
+	return render(request,'dashboard/user_profile.html',dataset)

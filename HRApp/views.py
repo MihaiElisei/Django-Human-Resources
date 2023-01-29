@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from .forms import EmployeeCreateForm, CreateUserForm
+from .forms import *
 from .models import *
 
 
@@ -249,3 +249,68 @@ def user_detail(request,id):
 	dataset['bank'] = bank_instance
 	dataset['title'] = 'profile - {0}'.format(employee.get_full_name)
 	return render(request,'dashboard/user_profile.html',dataset)
+
+
+# CREATE EMERGENCY DETAILS
+def emergency_form(request):
+	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
+		return redirect('/')
+	if request.method == 'POST':
+		form = EmergencyForm(data = request.POST)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			id = request.POST.get('employee')
+
+			employee_object = Employee.objects.get(id = id)
+			name = employee_object.get_full_name
+			
+			instance.employee = employee_object
+			instance.fullname = request.POST.get('fullname')
+			instance.tel = request.POST.get('tel')
+			instance.location = request.POST.get('location')
+			instance.relationship = request.POST.get('relationship')
+
+			instance.save()
+
+			messages.success(request,'Emergency Successfully Created for {0}'.format(name),extra_tags = 'alert alert-success alert-dismissible show')
+			return redirect('employees')
+
+		else:
+			messages.error(request,'Error Creating Emergency for {0}'.format(name),extra_tags = 'alert alert-warning alert-dismissible show')
+			return redirect('emergency_form')
+
+	dataset = dict()
+	form = EmergencyForm()
+	dataset['form'] = form
+	dataset['title'] = 'Create Emergency'
+	return render(request,'dashboard/emergency.html',dataset)
+
+
+# EDIT EMERGENCY DETAILS
+def emergency_edit(request,id):
+	if not (request.user.is_authenticated and request.user.is_superuser):
+		return redirect('/')
+
+	emergency = get_object_or_404(Emergency, id = id)
+	employee = emergency.employee
+	if request.method == 'POST':
+		form = EmergencyForm( data = request.POST, instance = emergency)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			instance.employee = employee
+			instance.fullname = request.POST.get('fullname')
+			instance.tel = request.POST.get('tel')
+			instance.location = request.POST.get('location')
+			instance.relationship = request.POST.get('relationship')
+
+			instance.save()
+
+			messages.success(request,'Emergency Details Successfully Updated',extra_tags = 'alert alert-success alert-dismissible show')
+			
+			return redirect('employeeinfo',id = employee.id)
+
+	dataset = dict()
+	form = EmergencyForm(request.POST or None,instance = emergency)
+	dataset['form'] = form
+	dataset['title'] = 'Updating Emergency Details for {0}'.format(employee.get_full_name)
+	return render(request,'dashboard/emergency.html',dataset)

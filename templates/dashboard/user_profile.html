@@ -149,7 +149,7 @@
                   {% endif %}
                   {% if request.user.is_superuser %}
                   <li class="list-group-item teal-color beige-color profile-list">
-                    <a href="#">Edit</a>
+                    <a href="#" class="add-information">Edit</a>
                   </li>
                   {% endif %}
                 </ul>
@@ -233,7 +233,7 @@
                   {% endif %}
                   {% if request.user.is_superuser %}
                   <li class="list-group-item teal-color beige-color profile-list">
-                    <a href="#">Edit</a>
+                    <a href="#" class="add-information">Edit</a>
                   </li>
                   {% endif %}
                 </ul>
@@ -285,13 +285,18 @@
                     <span>Relationship:</span>&nbsp;&nbsp;{{ emergency.relationship }}
                   </li>
                   {% endif %}
+                  {% if request.user.is_superuser %}
+                  <li class="list-group-item teal-color beige-color profile-list">
+                    <a href="{% url 'emergency_edit' emergency.id %}" class="add-information">Edit</a>
+                  </li>
+                  {% endif %}
                 </ul>
               </div>
             </div>
           {% else %}
           <h4>
             {% if request.user.is_superuser %}
-            <p class="no-information"> No Information found! To add information <span><a href="" class="add-information">Click Here</a></span></p>
+            <p class="no-information"> No Information found! To add information <span><a href="{% url 'emergency_form' %}" class="add-information">Click Here</a></span></p>
             {% else%}
             <p>No Information found!</p>
             {% endif %}

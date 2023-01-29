@@ -1,5 +1,5 @@
 from django import forms
-from .models import Role, Department, Nationality, Employee
+from .models import Role, Department, Nationality, Employee, Emergency, Relationship, Bank
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -24,6 +24,7 @@ class EmergencyForm(forms.ModelForm):
 		model = Emergency
 		fields = ['employee', 'fullname', 'tel', 'location', 'relationship']
 
+
 # CREATE FAMILY FORM
 class FamilyForm(forms.ModelForm):
 	class Meta:
@@ -33,7 +34,6 @@ class FamilyForm(forms.ModelForm):
 
 # CREATE BANK FORM
 class BankAccountForm(forms.ModelForm):
-
 	class Meta:
 		model = Bank
 		fields = ['employee','name','branch','account','salary']

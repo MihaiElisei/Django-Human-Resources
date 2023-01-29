@@ -28,4 +28,8 @@ urlpatterns = [
     # Path to user profile
     path('user-profile/', views.user_profile, name='userprofile'),
     path('employee/profile/<int:id>/', views.user_detail, name='employeeinfo'),
+    # Path to emergency form
+    path('emergency/create/', views.emergency_form, name='emergency_form'),
+    # Path to emergency form edit
+    path('emergency/edit/<int:id>', views.emergency_edit, name='emergency_edit'),
 ]

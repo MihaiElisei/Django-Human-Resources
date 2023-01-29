@@ -495,3 +495,19 @@ def approve_leave(request,id):
 
 	messages.error(request,'Leave successfully approved for {0}'.format(employee.get_full_name),extra_tags = 'alert alert-success alert-dismissible show')
 	return redirect('leaves_action', id = id)
+
+
+# UNAPPROVE LEAVE
+def unapprove_leave(request,id):
+	if not (request.user.is_authenticated and request.user.is_superuser):
+		return redirect('/')
+	leave = get_object_or_404(Leave, id = id)
+	leave.unapprove_leave
+	return redirect('leaves_action', id=id) 
+
+# ALL APPROVED LEAVES
+def approved_leaves(request):
+	if not (request.user.is_superuser and request.user.is_staff):
+		return redirect('/')
+	leaves = Leave.objects.all_approved_leaves() 
+	return render(request,'dashboard/approved_leaves.html',{'leave_list':leaves,'title':'approved leave list'})

@@ -1,18 +1,18 @@
 {% extends 'dashboard.html' %}
 
-
-{% block all_leaves %}
+{% block approved_leaves %}
 <div class="col-md-10 dahsboard-color">
     <div class="content">               
       <!-- TABLE -->
       <div class="table-responsive table-shadow">
         <div class="text-center table-description mt-5">
-          <h4 class="table-title">ALL LEAVES TABLE</h4>
+          <h4 class="table-title">Approved Leaves Table</h4>
         </div>
         {% if leave_list %}
-        <table class="table mt-5">
+        <table class="table">
             <thead>
               <tr>
+                <!-- <th scope="col">#</th> -->
                 <th scope="col">User</th>
                 <th scope="col">Type</th>
                 <th scope="col">Day(s)</th>
@@ -27,19 +27,23 @@
                 <td>{{ leave.leavetype}}</td>
                 <td>{{ leave.leave_days }}</td>
                 <td>{{ leave.status }}</td>
-                <td>
-                  <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn btn-primary" >
-                    <i class="fas fa-directions"></i>
-                  </a>
+                <td> 
+                    <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn btn-primary" >
+                        <i class="fas fa-directions"></i>
+                      </a>  
+                      <a href="{% url 'unapprove_leave' leave.id %}" title="Unapprove" class="btn btn-danger" >
+                        <i class="fas fa-user-slash"></i>
+                      </a> 
                 </td>
               </tr>
               {% endfor %}
             </tbody>
-      </table>
+        </table>
       {% else %}
       <p class="no-birthdays">No Records Available!</p>
       {% endif %}
       </div>          
     </div>  
   </div>
-{% endblock all_leaves %}
+{% endblock approved_leaves %}
+

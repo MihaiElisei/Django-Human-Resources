@@ -436,3 +436,11 @@ class Leave(models.Model):
             self.status = 'approved'
             self.save()
         return 
+    
+    @property
+    def unapprove_leave(self):
+        if self.is_approved:
+            self.is_approved = False
+            self.status = 'pending'
+            self.save()
+        return

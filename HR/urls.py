@@ -51,4 +51,7 @@ urlpatterns = [
     # Path to approve leave
     path('leave/approve/<int:id>/', views.approve_leave, name='aprove_leave'),
     # Path to unaporove leave
+    path('leave/unapprove/<int:id>/', views.unapprove_leave, name='unapprove_leave'),
+    # Path to approved leave page
+    path('leaves/approved/all/', views.approved_leaves, name='approved_leaves'),
 ]

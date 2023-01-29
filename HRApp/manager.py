@@ -13,8 +13,27 @@ class EmployeeManager(models.Manager):
 
 
 class LeaveManager(models.Manager):
-	def get_queryset(self):
-		return super().get_queryset()
+
+    def get_queryset(self):
+        return super().get_queryset()
+    
+    def all_pending_leaves(self):
+        return super().get_queryset().filter(status='pending').order_by('-created')
+
+    def all_approved_leaves(self):
+        '''
+        gets all approved leaves -> Leave.objects.all_approved_leaves()
+        '''
+        return super().get_queryset().filter(status='approved')
+        
+
+
+
+
+
+
+
+
 
 
 	

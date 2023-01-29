@@ -314,3 +314,39 @@ def emergency_edit(request,id):
 	dataset['form'] = form
 	dataset['title'] = 'Updating Emergency Details for {0}'.format(employee.get_full_name)
 	return render(request,'dashboard/emergency.html',dataset)
+
+
+# CREATE FAMILY DETAILS
+def family_form(request):
+	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
+		return redirect('/')
+	if request.method == 'POST':
+		form = FamilyForm(data = request.POST or None)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			employee_id = request.POST.get('employee')
+			employee_object = get_object_or_404(Employee,id = employee_id)
+			instance.employee = employee_object
+			instance.status = request.POST.get('status')
+			instance.spouse = request.POST.get('spouse')
+			instance.occupation = request.POST.get('occupation')
+			instance.tel = request.POST.get('tel')
+			instance.children = request.POST.get('children')
+			instance.father = request.POST.get('father')
+			instance.mother = request.POST.get('mother')
+
+			instance.save()
+
+			messages.success(request,'Relationship Successfully Created for {0}'.format(employee_object),extra_tags = 'alert alert-success alert-dismissible show')
+			return redirect('employees')
+		else:
+			messages.error(request,'Failed to create Relationship for {0}'.format(employee_object),extra_tags = 'alert alert-warning alert-dismissible show')
+			return redirect('family_form')
+
+	dataset = dict()
+
+	form = FamilyForm()
+
+	dataset['form'] = form
+	dataset['title'] = 'Family Form'
+	return render(request,'dashboard/family.html',dataset)

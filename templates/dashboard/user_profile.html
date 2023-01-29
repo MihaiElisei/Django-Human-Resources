@@ -149,7 +149,7 @@
                   {% endif %}
                   {% if request.user.is_superuser %}
                   <li class="list-group-item teal-color beige-color profile-list">
-                    <a href="#" class="add-information">Edit</a>
+                    <a href="/employee/profile/edit/{{ employee.id }}" class="add-information">Edit</a>
                   </li>
                   {% endif %}
                 </ul>
@@ -242,7 +242,7 @@
           {% else %}
           <h4>
             {% if request.user.is_superuser %}
-            <p class="no-information"> No Information found! To add information <span><a href="" class="add-information">Click Here</a></span></p>
+            <p class="no-information"> No Information found! To add information <span><a href="{% url 'family_form' %}" class="add-information">Click Here</a></span></p>
             {% else%}
             <p>No Information found!</p>
             {% endif %}
@@ -358,5 +358,4 @@
     </div>
   </div>  
 </div>
-
 {% endblock user_profile %}

@@ -45,7 +45,7 @@ ul::-webkit-scrollbar{
     font-size: 20px;
 }
 
-.textinput, .select, .dateinput, .emailinput{
+.textinput, .select, .dateinput, .emailinput, .numberinput, .regionalphonenumberwidget{
     border: 1px solid #0E5E6F;
 }
 

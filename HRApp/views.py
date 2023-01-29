@@ -388,3 +388,43 @@ def family_edit(request,id):
 	dataset['form'] = form
 	dataset['title'] = 'Update Family Details'
 	return render(request,'dashboard/family.html',dataset)
+
+
+# CREATE BANK DETAILS
+def bank_form(request):
+	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
+		return redirect('/')
+	if request.method == 'POST':
+		form = BankAccountForm(data = request.POST)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			employee_id = request.POST.get('employee')
+			employee_object = get_object_or_404(Employee,id = employee_id)
+
+			instance.employee = employee_object
+			instance.name = request.POST.get('name')
+			instance.branch = request.POST.get('branch')
+			instance.account = request.POST.get('account')
+			instance.salary = request.POST.get('salary')
+
+			instance.save()
+
+			messages.success(request,'Account Successfully Created for {0}'.format(employee_object.get_full_name),extra_tags = 'alert alert-success alert-dismissible show')
+			return redirect('employees')
+		else:
+			messages.error(request,'Error Creating Account for {0}'.format(employee_object.get_full_name),extra_tags = 'alert alert-warning alert-dismissible show')
+			return redirect('bank_form')
+
+	dataset = dict()
+	form = BankAccountForm()
+	
+	dataset['form'] = form
+	dataset['title'] = 'Bank Details Form'
+	return render(request,'dashboard/bank.html',dataset)
+
+
+
+
+
+
+

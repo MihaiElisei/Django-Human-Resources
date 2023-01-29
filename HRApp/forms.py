@@ -36,4 +36,4 @@ class FamilyForm(forms.ModelForm):
 class BankAccountForm(forms.ModelForm):
 	class Meta:
 		model = Bank
-		fields = ['employee','name','branch','account','salary']
+		fields = ['employee', 'name', 'branch', 'account', 'salary']

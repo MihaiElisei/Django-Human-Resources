@@ -207,18 +207,9 @@ position: fixed;
     margin: 0 auto;
 }
 
-
-
-
-
-
-
-
 .form-wrapper{
     margin-left: 20px;
 }
-
-
 
 textarea:focus,
 input[type="text"]:focus,
@@ -241,7 +232,9 @@ input[type="color"]:focus,
     outline: 0 none;
 }
 
-/* User Profile */
+/* ------------------------------------
+       USER PROFILE CONFIGURATION
+--------------------------------------*/
 
 .profile-list{
     border: none;
@@ -267,59 +260,3 @@ input[type="color"]:focus,
     text-decoration: none;
     color: #820000;
 }
-/* .profile-wrapper{
-    padding-top: 10px;
-  }
-  
-  
-.list-group {
-    margin-top: 10px;
-}
-  
-span{
-    color: #c7c7c7;
-    font-weight: lighter;
-    font-size: 14px;
-}
-  
-  
-.list-group-item {
-    position: relative;
-    display: block;
-    padding: 10px 15px;
-    margin-bottom: -1px;
-    background-color: #fff;
-    border: 1px solid transparent;
-    font-size:17px;
-}
-  
-  
-.employee-name-title{
-    color: #3873b1;
-    font-weight: 600;
-    font-variant: petite-caps;
-    font-size: 3.1rem !important;
-}
-  
-span,.list-group-item > div{
-    font-variant: petite-caps;
-}
-  
-  
-.panel-default>.panel-heading {
-    color: #fff !important;
-    background-color: #2d88a9 !important;
-}
-  
-.panel-title a:hover{
-    color:#e6e4e4;
-}
-  
-.panel-title a:active{
-    color:#e6e4e4;
-}
-  
-.panel-title a:focus{
-    color:#e6e4e4;
-}
-   */

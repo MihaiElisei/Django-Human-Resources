@@ -1,0 +1,42 @@
+{% extends 'dashboard.html' %}
+
+
+{% block birthdays %}
+    <div class="col-md-10 dahsboard-color p-5">
+		<div class="table-responsive table-shadow">
+			<div class="text-center table-description">
+			  <h4 class="table-title">ALL BIRTHDAYS THIS MONTH</h4>
+			</div>
+            {% if birthdays %}
+            <table class="table mt-5">
+                <thead style="text-align: center;">
+                    <tr>
+                      <th scope="col">Staff</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Date of Birth</th>
+                      <th scope="col">Celebration</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: center;">
+                    {% for employee in birthdays %}
+                    <tr>
+                        <td>{{ employee.get_full_name }}</td>
+                        <td>{{ employee.department }}</td>
+                        <td>{{ employee.birthday }}</td> 
+                        {% if employee.birthday_today %}
+                        <td style="color: #820000;">Happy Birthday!</td>
+                      {% elif employee.days_check_date_fade %}
+                        <td>celebrated</td>
+                      {% else %}
+                        <td>{{ employee.birthday_counter}}</td>
+                      {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+			<p class="no-birthdays">No Birthdays this month!</p>
+			{% endif %}
+		</div>	
+    </div>
+    {% endblock birthdays %}

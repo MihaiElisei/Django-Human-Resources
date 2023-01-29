@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from phonenumber_field.modelfields import PhoneNumberField
 import datetime
+from .manager import EmployeeManager
 
 
 # NATIONALITY MODEL
@@ -62,7 +63,7 @@ class Role(models.Model):
 
 # BANK DETAILS MODEL
 class Bank(models.Model):
-    employee = models.OneToOneField('Employee', help_text='select employee(s) to add bank account', on_delete=models.CASCADE, blank=False, primary_key=True)
+    employee = models.ForeignKey('Employee',help_text='select employee(s) to add bank account',on_delete=models.CASCADE, blank=False, primary_key=True, unique=True)
     name = models.CharField(_('Name of Bank'), max_length=125, blank=False, null=True)
     account = models.CharField(_('Account Number'), help_text='employee account number', max_length=30, blank=False, null=True)
     branch = models.CharField(_('Branch'), help_text='which branch was the account issue', max_length=125, blank=True, null=True)
@@ -301,6 +302,8 @@ class Employee(models.Model):
     is_blocked = models.BooleanField(_('Is Blocked'),help_text='button to toggle employee block and unblock',default=False)
     is_deleted = models.BooleanField(_('Is Deleted'),help_text='button to toggle employee deleted and undelete',default=False)
 
+    objects = EmployeeManager()
+
     class Meta:
         verbose_name = _('Employee')
         verbose_name_plural = _('Employees')
@@ -330,6 +333,43 @@ class Employee(models.Model):
         dateofbirth_year = self.birthday.year
         if dateofbirth_year:
             return current_year - dateofbirth_year
+        return
+
+    @property
+    def birthday_today(self):
+        '''
+        returns True, if birthday is today else False
+        '''
+        return self.birthday.day == datetime.date.today().day
+
+
+
+    @property
+    def days_check_date_fade(self):
+        '''
+        Check if Birthday has already been celebrated this month
+        '''
+        return self.birthday.day < datetime.date.today().day 
+
+    def birthday_counter(self):
+        '''
+        This method counts days to birthday -> 2 day's or 1 day
+        '''
+        today = datetime.date.today()
+        current_year = today.year
+
+        birthday = self.birthday 
+
+        future_date_of_birth = datetime.date(current_year,birthday.month,birthday.day)
+
+        if birthday:
+            if (future_date_of_birth - today).days > 1:
+
+                return str((future_date_of_birth - today).days) + ' day\'s'
+
+            else:
+
+                return ' tomorrow'
         return
 
 

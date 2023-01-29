@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import *
 from .models import *
+from .manager import EmployeeManager
 
 
 # RENDER INDEX PAGE
@@ -387,7 +388,7 @@ def family_edit(request,id):
 
 	dataset['form'] = form
 	dataset['title'] = 'Update Family Details'
-	return render(request,'dashboard/family.html',dataset)
+	return render(request, 'dashboard/family.html', dataset)
 
 
 # CREATE BANK DETAILS
@@ -420,11 +421,20 @@ def bank_form(request):
 	
 	dataset['form'] = form
 	dataset['title'] = 'Bank Details Form'
-	return render(request,'dashboard/bank.html',dataset)
+	return render(request, 'dashboard/bank.html', dataset)
 
 
+# BIRTHDAYS
+def birthdays(request):	
+	if not request.user.is_authenticated:
+		return redirect('/')
 
-
-
-
-
+	employees = Employee.objects.birthdays_current_month()
+	month = datetime.date.today().strftime('%B')
+	context = {
+	'birthdays':employees,
+	'month':month,
+	'count_birthdays':employees.count(),
+	'title':'Birthdays'
+	}
+	return render(request,'dashboard/birthdays.html',context)

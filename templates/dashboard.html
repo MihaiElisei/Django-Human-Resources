@@ -30,7 +30,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#">
+                            <a href="{% url 'birthdays' %}">
                                 <i class="fas fa-birthday-cake"></i></i>&nbsp;&nbsp;Birthday
                             </a>
                         </li>
@@ -57,6 +57,8 @@
         {% block family %}{% endblock family %}
         <!-- BLOCK BANK -->
         {% block bank %}{% endblock bank %}
+        <!-- BLOCK BIRTHDAYS -->
+        {% block birthdays %}{% endblock birthdays %}
     </div>
 </div>
 {% endblock content %}

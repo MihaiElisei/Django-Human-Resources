@@ -38,4 +38,6 @@ urlpatterns = [
     path('family/edit/<int:id>', views.family_edit, name='family_edit'),
     # Path to bank details form
     path('bank/create/', views.bank_form, name='bank_form'),
+    # Path to birthdays page
+    path('birthdays/', views.birthdays, name='birthdays'),
 ]

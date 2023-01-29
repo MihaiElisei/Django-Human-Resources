@@ -11,8 +11,9 @@
               <div class="input-group">
                 <span class="input-group-btn">
                   <button class="btn btn-default teal-color beige-color" style="margin-right: 5px;" type="button">Search</button>
+                  <a href="{% url 'employees' %}" class="btn teal-color beige-color" style="margin-right: 5px;"><i class="fas fa-sync-alt"></i></a>
                 </span>
-                <input type="search" value="{{request.GET.search}}" name="search" class="form-control search" placeholder="Search by First Name or Last Name...">
+                <input type="search" value="{{request.GET.search}}" name="search" class="form-control search" placeholder="Search by First Name or Last Name..." style="border-radius: 5px;">
               </div>
             </form>
           </div>

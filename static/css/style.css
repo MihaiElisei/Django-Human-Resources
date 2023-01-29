@@ -211,6 +211,7 @@ position: fixed;
     margin-left: 20px;
 }
 
+/* Eliminate box-shadow  from inputs when they are focused*/
 textarea:focus,
 input[type="text"]:focus,
 .form-select:focus,
@@ -260,3 +261,16 @@ input[type="color"]:focus,
     text-decoration: none;
     color: #820000;
 }
+
+/* ------------------------------------
+       BIRTHDAYS PAGE CONFIGURATION
+--------------------------------------*/
+
+.no-birthdays{
+    text-align: center;
+    margin-top: 10%;
+    font-size: 25px;
+    color: #820000;
+    font-weight: bold;
+}
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Employee, Role, Department, Nationality, Bank, Relationship, Emergency
+from .models import *
 
 # Register your models here.
 admin.site.register(Employee)
@@ -9,5 +9,6 @@ admin.site.register(Nationality)
 admin.site.register(Bank)
 admin.site.register(Relationship)
 admin.site.register(Emergency)
+admin.site.register(Leave)
 
 

@@ -1,0 +1,41 @@
+{% extends 'dashboard.html' %}
+
+
+{% block all_leaves %}
+<div class="col-md-10 dahsboard-color">
+    <div class="content">               
+      <!-- TABLE -->
+      <div class="table-responsive table-shadow">
+        <div class="text-center table-description mt-5">
+          <h4 class="table-title">ALL LEAVES TABLE</h4>
+        </div>
+        {% if leave_list %}
+        <table class="table mt-5">
+            <thead>
+              <tr>
+                <th scope="col">User</th>
+                <th scope="col">Type</th>
+                <th scope="col">Day(s)</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for leave in leave_list %}
+              <tr>
+                <td>{{ leave.user }}</td>
+                <td>{{ leave.leavetype}}</td>
+                <td>{{ leave.leave_days }}</td>
+                <td>{{ leave.status }}</td>
+                <td><a href="#"><span>view</span></a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+      </table>
+      {% else %}
+      <p class="no-birthdays">No Records Available!</p>
+      {% endif %}
+      </div>          
+    </div>  
+  </div>
+{% endblock all_leaves %}

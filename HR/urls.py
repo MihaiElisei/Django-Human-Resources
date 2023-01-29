@@ -42,5 +42,8 @@ urlpatterns = [
     path('birthdays/', views.birthdays, name='birthdays'),
 
     # --------LEAVES----------
+    # Path to apply for leave form
     path('leave/apply/', views.create_leave, name='create_leave'),
+    # Path to see all pending leaves
+    path('leaves/all/', views.all_leaves, name='leaves_list'),
 ]

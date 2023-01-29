@@ -25,8 +25,8 @@
                         </li>
                         {% endif %}
                         <li class="sidebar-item">
-                            {% if request.user.is_superuser %}<a href="#">{% else %}<a href="#"> {% endif %}
-                                <i class="fas fa-plane-departure"></i></i>&nbsp;&nbsp;Leave
+                            {% if request.user.is_superuser %}<a href="{% url 'leaves_list' %}">{% else %}<a href="#"> {% endif %}
+                                <i class="fas fa-plane-departure"></i></i>&nbsp;&nbsp;Leaves
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -39,6 +39,8 @@
             </div>
         </div>
         
+        <!-- ---------------DASHBOARD BLOCKS--------------- -->
+
         <!-- DASHBOARD HOME -->
         {% block dahsboard-home %}{% endblock dahsboard-home %}
         <!-- DISPLAY ALL EMPLOYEES -->
@@ -61,6 +63,8 @@
         {% block birthdays %}{% endblock birthdays %}
         <!-- CREATE LEAVE -->
         {% block create_leave %}{% endblock create_leave %}
+        <!-- ALL LEAVES -->
+        {% block all_leaves %}{% endblock all_leaves %}
     </div>
 </div>
 {% endblock content %}

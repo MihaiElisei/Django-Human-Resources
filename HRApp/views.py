@@ -442,7 +442,7 @@ def birthdays(request):
 
 # -----------------------------LEAVE
 
-
+# CREATE LEAVE
 def create_leave(request):
 	if not request.user.is_authenticated:
 		return redirect('/')
@@ -455,7 +455,7 @@ def create_leave(request):
 			instance.save()
 
 			messages.success(request,'Leave Request Sent,wait for Human Resource Managers response',extra_tags = 'alert alert-success alert-dismissible show')
-			return redirect('create_leave')
+			return redirect('leaves_list')
 		else:
 			messages.error(request,'failed to Request a Leave,please check entry dates',extra_tags = 'alert alert-warning alert-dismissible show')
 			return redirect('create_leave')
@@ -465,3 +465,11 @@ def create_leave(request):
 	dataset['form'] = form
 	dataset['title'] = 'Apply for Leave'
 	return render(request,'dashboard/create_leave.html',dataset)
+
+
+# ALL LEAVES LIST
+def all_leaves(request):
+	if not (request.user.is_staff and request.user.is_superuser):
+		return redirect('/')
+	leaves = Leave.objects.all_pending_leaves()
+	return render(request,'dashboard/all_leaves.html',{'leave_list':leaves,'title':'leaves list - pending'})

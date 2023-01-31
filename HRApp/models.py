@@ -444,3 +444,10 @@ class Leave(models.Model):
             self.status = 'pending'
             self.save()
         return
+
+    @property
+    def reject_leave(self):
+        if self.is_approved or not self.is_approved:
+            self.is_approved = False
+            self.status = 'rejected'
+            self.save()

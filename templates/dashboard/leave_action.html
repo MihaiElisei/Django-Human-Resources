@@ -51,7 +51,7 @@
                         {% else %}
                         <a href="{% url 'aprove_leave' leave.id %}" class="btn btn-success" name='approve'>APPROVE</a>
                         {% endif %}
-                        <a href="#" class="btn btn-danger" name='reject'>REJECT</a>  
+                        <a href="{% url 'reject' leave.id %}" class="btn btn-danger" name='reject'>REJECT</a>  
                     </div>  
             </div>
             {% endif %}

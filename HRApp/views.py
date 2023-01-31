@@ -511,3 +511,11 @@ def approved_leaves(request):
 		return redirect('/')
 	leaves = Leave.objects.all_approved_leaves() 
 	return render(request,'dashboard/approved_leaves.html',{'leave_list':leaves,'title':'approved leave list'})
+
+# REJECT LEAVE
+def reject_leave(request,id):
+	dataset = dict()
+	leave = get_object_or_404(Leave, id = id)
+	leave.reject_leave
+	messages.success(request,'Leave is rejected',extra_tags = 'alert alert-success alert-dismissible show')
+	return redirect('leaves_list')

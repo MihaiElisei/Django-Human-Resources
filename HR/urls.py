@@ -56,4 +56,6 @@ urlpatterns = [
     path('leaves/approved/all/', views.approved_leaves, name='approved_leaves'),
     # Path to reject leave
     path('leave/reject/<int:id>/', views.reject_leave, name='reject'),
+    # Path to rejected leaves
+    path('leaves/rejected/all/', views.rejected_leaves, name='rejected_leaves'),
 ]

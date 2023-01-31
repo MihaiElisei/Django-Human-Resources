@@ -471,7 +471,7 @@ def create_leave(request):
 def all_leaves(request):
 	if not (request.user.is_staff and request.user.is_superuser):
 		return redirect('/')
-	leaves = Leave.objects.all_pending_leaves()
+	leaves = Leave.objects.all_leaves()
 	return render(request,'dashboard/all_leaves.html',{'leave_list':leaves,'title':'leaves list - pending'})
 
 # LEAVE ACTION
@@ -519,3 +519,10 @@ def reject_leave(request,id):
 	leave.reject_leave
 	messages.success(request,'Leave is rejected',extra_tags = 'alert alert-success alert-dismissible show')
 	return redirect('leaves_list')
+
+# ALL REJECTED LEAVES
+def rejected_leaves(request):
+	if not (request.user.is_superuser and request.user.is_staff):
+		return redirect('/')
+	leaves = Leave.objects.all_rejected_leaves() 
+	return render(request,'dashboard/rejected_leaves.html',{'leave_list':leaves,'title':'approved leave list'})

@@ -42,7 +42,7 @@ def all_employees(request):
 			Q(firstname__icontains=query) |
 			Q(lastname__icontains=query)
 			)
-    paginator = Paginator(employees, 10)  # show 10 employees per page
+    paginator = Paginator(employees, 5)  # show 10 employees per page
     page = request.GET.get('page')
     employees_paginated = paginator.get_page(page)
 
@@ -523,7 +523,13 @@ def create_leave(request):
 # ALL LEAVES LIST
 def all_leaves(request):
 	leaves = Leave.objects.all_leaves()
-	return render(request,'dashboard/all_leaves.html',{'leave_list':leaves,'title':'leaves list - pending'})
+	if request.user.is_superuser:
+		paginator = Paginator(leaves, 3)
+	else:
+		paginator = Paginator(leaves, 8)
+	page = request.GET.get('page')
+	all_leaves = paginator.get_page(page)
+	return render(request,'dashboard/all_leaves.html',{'leave_list': all_leaves})
 
 # LEAVE ACTION
 def leaves_action(request,id):

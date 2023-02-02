@@ -52,6 +52,11 @@ class CreateLeave(forms.ModelForm):
 	class Meta:
 		model = Leave
 		exclude = ['user', 'defaultdays', 'hrcomments', 'status', 'is_approved', 'updated', 'created']
+		widgets = {
+			'startdate': forms.DateTimeInput(format='%Y-%m-%d %H:%M:%S', attrs={'class': 'datetimefield'}),
+			'enddate': forms.DateTimeInput(format='%Y-%m-%d %H:%M:%S', attrs={'class': 'datetimefield'})
+
+		}
 
 	def clean_enddate(self):
 		enddate = self.cleaned_data['enddate']

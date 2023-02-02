@@ -20,6 +20,7 @@
                 <th scope="col">Day(s)</th>
                 <th scope="col">Status</th>
                 {% if request.user.is_superuser %}
+                <th scope="col" style="width: 30%;">Reason</th>
                 <th scope="col">Actions</th>
                 {% endif %}
               </tr>
@@ -32,8 +33,9 @@
                 <td>{{ leave.leave_days }}</td>
                 <td>{{ leave.status }}</td>
                 {% if request.user.is_superuser %}
+                <td>{{ leave.reason }}</td>
                 <td>
-                  <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn btn-primary" >
+                  <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn teal-color beige-color" >
                     <i class="fas fa-directions"></i>
                   </a>
                 </td>
@@ -42,6 +44,34 @@
               {% endfor %}
             </tbody>
       </table>
+      <!-- Pagination -->
+      <nav class="mt-5 pagination justify-content-center">
+        {% if leave_list.has_other_pages %}
+        <ul class="pagination ">
+            {% if leave_list.has_previous %}
+            <a href="?page=1" class="btn teal-color beige-color mb-4" style="width: 60px; border-radius: 1px; border: 1px solid #0E5E6F;">First</a>
+            <li class="page-item"><a href="?page={{ leave_list.previous_page_number }}" class="page-link" style="background-color: #0E5E6F!important; border: 1px solid #0E5E6F; color: #F2DEBA;"><i class="fas fa-angle-double-left"></i></a></li>
+            {% else %}
+            <li class="page-item disabled"></li>
+            {% endif %}
+            
+            {% for i in leave_list.paginator.page_range %}
+                {% if leave_list.number == i %}
+                <li class="page-item active" ><span class="page-link" style="background-color: #0E5E6F!important; border: 1px solid #0E5E6F;">{{ i }}<span class="sr-only"></span></span></li>
+                {% else %}
+                <li class="page-item"><a href="?page={{ i }}" class="page-link" style="background-color: #0E5E6F!important; border: 1px solid #0E5E6F; color: #F2DEBA;">{{ i }}</a></li>
+                {% endif %} 
+            {% endfor %}
+
+            {% if leave_list.has_next %}
+            <li class="page-item"><a href="?page={{ leave_list.next_page_number }}" class="page-link" style="background-color: #0E5E6F!important; border: 1px solid #0E5E6F; color: #F2DEBA;"><i class="fas fa-angle-double-right"></i></a></li>           
+            <a href="?page={{ leave_list.paginator.num_pages }}" class="btn btn-outline-primary mb-4 teal-color beige-color" style="width: 60px; border-radius: 1px; border: 1px solid #0E5E6F; border-left: none;">Last</a>
+            {% else %}
+            <li class="page-item disabled"></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </nav>
       {% else %}
       <p class="no-birthdays">No Records Available!</p>
       {% endif %}

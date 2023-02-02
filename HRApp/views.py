@@ -208,7 +208,12 @@ def create_user(request):
 # VIEW ALL USERS
 def all_users(request):
 	employees = Employee.objects.all()
-	return render(request,'account/all_users.html',{'employees':employees,'title':'Users List'})
+	
+	paginator = Paginator(employees,5)  
+	page = request.GET.get('page')
+	employees_paginated = paginator.get_page(page)
+
+	return render(request,'account/all_users.html',{'employees':employees_paginated, 'title':'Users List'})
 
 
 # USER PROFILE
@@ -484,11 +489,17 @@ def birthdays(request):
 
 	employees = Employee.objects.birthdays_current_month()
 	month = datetime.date.today().strftime('%B')
+
+	paginator = Paginator(employees, 5)
+	page = request.GET.get('page')
+	employee_list = paginator.get_page(page)
+
 	context = {
-	'birthdays':employees,
+	'birthdays':employee_list,
 	'month':month,
 	'count_birthdays':employees.count(),
-	'title':'Birthdays'
+	'title':'Birthdays',
+	'employee_list':employee_list,
 	}
 	return render(request,'dashboard/birthdays.html',context)
 
@@ -568,7 +579,12 @@ def approved_leaves(request):
 	if not (request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
 	leaves = Leave.objects.all_approved_leaves() 
-	return render(request,'dashboard/approved_leaves.html',{'leave_list':leaves,'title':'approved leave list'})
+
+	paginator = Paginator(leaves, 5)
+	page = request.GET.get('page')
+	leave_list = paginator.get_page(page)
+
+	return render(request,'dashboard/approved_leaves.html',{'leave_list':leave_list})
 
 # REJECT LEAVE
 def reject_leave(request,id):
@@ -583,4 +599,8 @@ def rejected_leaves(request):
 	if not (request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
 	leaves = Leave.objects.all_rejected_leaves() 
-	return render(request,'dashboard/rejected_leaves.html',{'leave_list':leaves,'title':'rejected leave list'})
+	paginator = Paginator(leaves, 5)
+	page = request.GET.get('page')
+	leave_list = paginator.get_page(page)
+
+	return render(request,'dashboard/rejected_leaves.html',{'leave_list':leave_list,'title':'rejected leave list'})

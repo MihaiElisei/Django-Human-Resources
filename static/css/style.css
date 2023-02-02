@@ -58,6 +58,14 @@ ul::-webkit-scrollbar{
     font-size: 20px;
 }
 
+.table{
+    -webkit-box-shadow:rgba(14,94,111, 0.16) 0px 3px 10px, rgba(14,94,111,0.23) 0px 3px 10px;
+    box-shadow :rgba(14,94,111, 0.25) 0px 3px 10px, rgba(14,94,111,0.40) 0px 3px 10px;
+}
+
+.table, .table th, .table td{
+    border: none!important;
+}
 
 /* ------------------------------
        START CONFIGURATION

@@ -55,19 +55,19 @@
     </div>
     <!-- PERSONAL DETAILS -->
     <div class="container teal-color" style="width:65%; margin:0; margin-left: 10px; border-radius: 5px;">
-      <div style="max-height: 50vh;">
-      <p>
-        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-            aria-expanded="false" aria-controls="collapseOne">
-            PERSONAL INFORMATIONS
-        </button>
-      </p>
-      <div class="collapse" id="collapseOne" style="margin-left: 10px;">
-        <div class="panel-body">
-          <div class="container-fluid">
+      <div class="accordion" id="accordionExample" style="background-color: transparent;">
+        <div class="accordion-item" style="background-color: transparent; border: none;">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+              PERSONAL INFORMATIONS
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body" >
+              <div class="container-fluid">
             <div class="row">
               {% if employee %}
-              <div class="list-group" id="list-tab" role="tablist">
+              <div class="list-group" role="tablist">
                 <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
                   <li class="list-group-item teal-color beige-color profile-list">
                     <span>Title:</span>&nbsp;&nbsp;{{ employee.title }}
@@ -165,201 +165,196 @@
             </h4>
             {% endif %}
           </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- FAMILY INFORMATIONS -->
-    <div style="max-height: 40vh;">
-      <p>
-        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-            aria-expanded="false" aria-controls="collapseTwo">
-            FAMILY INFORMATIONS
-        </button>
-      </p>
-      <div class="collapse" id="collapseTwo"  style="margin-left: 10px;">
-        <div class="panel-body">
-          <div class="container-fluid">
-            <div class="row">
-              {% if family %}
-              <div class="list-group" id="list-tab" role="tablist">
-                <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Status:</span>&nbsp;&nbsp;{{ family.status }}
-                  </li>
-                  {% if family.spouse %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Spouse Name:</span>&nbsp;&nbsp;{{ family.spouse}}
-                  </li>
-                  {% endif %}
-                  {% if family.occupation %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Spouse( Occupation ):</span>&nbsp;&nbsp;{{ family.occupation }}
-                  </li>
-                  {% endif %}
-                  {% if family.tel %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Spouse (Phone Number):</span>&nbsp;&nbsp;{{ family.tel }}
-                  </li>
-                  {% endif %}
-                  {% if family.children %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Number of Children:</span>&nbsp;&nbsp;{{ family.children }}
-                  </li>
-                  {% endif %}
-                  {% if family.nextofkin %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Next of Kin (Contact):</span>&nbsp;&nbsp;{{ family.nextofkin }}
-                  </li>
-                  {% endif %}
-                  {% if family.contact %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Phone Number:</span>&nbsp;&nbsp;{{ family.contact }}
-                  </li>
-                  {% endif %}
-                  {% if family.relationship %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Relationship with Next of Kin:</span>&nbsp;&nbsp;{{ family.relationship }}
-                  </li>
-                  {% endif %}
-                  {% if family.father %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Father Name:</span>&nbsp;&nbsp;{{ family.father }}
-                  </li>
-                  {% endif %}
-                  {% if family.mother %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Mother Name:</span>&nbsp;&nbsp;{{ family.mother }}
-                  </li>
-                  {% endif %}
-                  {% if request.user.is_superuser %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <a href="{% url 'family_edit' family.id %}" class="add-information">Edit</a>
-                  </li>
-                  {% endif %}
-                </ul>
+        <div class="accordion-item" style="background-color: transparent; border: none;">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              FAMILY INFORMATIONS
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="container-fluid">
+                <div class="row">
+                  {% if family %}
+                  <div class="list-group" id="list-tab" role="tablist">
+                    <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Status:</span>&nbsp;&nbsp;{{ family.status }}
+                      </li>
+                      {% if family.spouse %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Spouse Name:</span>&nbsp;&nbsp;{{ family.spouse}}
+                      </li>
+                      {% endif %}
+                      {% if family.occupation %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Spouse( Occupation ):</span>&nbsp;&nbsp;{{ family.occupation }}
+                      </li>
+                      {% endif %}
+                      {% if family.tel %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Spouse (Phone Number):</span>&nbsp;&nbsp;{{ family.tel }}
+                      </li>
+                      {% endif %}
+                      {% if family.children %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Number of Children:</span>&nbsp;&nbsp;{{ family.children }}
+                      </li>
+                      {% endif %}
+                      {% if family.nextofkin %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Next of Kin (Contact):</span>&nbsp;&nbsp;{{ family.nextofkin }}
+                      </li>
+                      {% endif %}
+                      {% if family.contact %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Phone Number:</span>&nbsp;&nbsp;{{ family.contact }}
+                      </li>
+                      {% endif %}
+                      {% if family.relationship %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Relationship with Next of Kin:</span>&nbsp;&nbsp;{{ family.relationship }}
+                      </li>
+                      {% endif %}
+                      {% if family.father %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Father Name:</span>&nbsp;&nbsp;{{ family.father }}
+                      </li>
+                      {% endif %}
+                      {% if family.mother %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Mother Name:</span>&nbsp;&nbsp;{{ family.mother }}
+                      </li>
+                      {% endif %}
+                      {% if request.user.is_superuser %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <a href="{% url 'family_edit' family.id %}" class="add-information">Edit</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </div>
+              {% else %}
+              <h4>
+                {% if request.user.is_superuser %}
+                <p class="no-information"> No Information found! To add information <span><a href="{% url 'family_form' %}" class="add-information">Click Here</a></span></p>
+                {% else%}
+                <p>No Information found!</p>
+                {% endif %}
+              </h4>
+              {% endif %}
               </div>
             </div>
-          {% else %}
-          <h4>
-            {% if request.user.is_superuser %}
-            <p class="no-information"> No Information found! To add information <span><a href="{% url 'family_form' %}" class="add-information">Click Here</a></span></p>
-            {% else%}
-            <p>No Information found!</p>
-            {% endif %}
-          </h4>
-          {% endif %}
+          </div>
+        </div>
+        <div class="accordion-item" style="background-color: transparent; border: none;">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              EMERGENCY INFORMATIONS
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="container-fluid">
+                <div class="row">
+                  {% if emergency.fullname %}
+                  <div class="list-group" id="list-tab" role="tablist">
+                    <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Full Name:</span>&nbsp;&nbsp;{{ emergency.fullname }}
+                      </li>
+                      {% if emergency.tel %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Phone Number:</span>&nbsp;&nbsp;{{ emergency.tel }}
+                      </li>
+                      {% endif %}
+                      {% if emergency.location %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Residence:</span>&nbsp;&nbsp;{{ emergency.location }}
+                      </li>
+                      {% endif %}
+                      {% if emergency.relationship %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Relationship:</span>&nbsp;&nbsp;{{ emergency.relationship }}
+                      </li>
+                      {% endif %}
+                      {% if request.user.is_superuser %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <a href="{% url 'emergency_edit' emergency.id %}" class="add-information">Edit</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </div>
+              {% else %}
+              <h4>
+                {% if request.user.is_superuser %}
+                <p class="no-information"> No Information found! To add information <span><a href="{% url 'emergency_form' %}" class="add-information">Click Here</a></span></p>
+                {% else%}
+                <p>No Information found!</p>
+                {% endif %}
+              </h4>
+              {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item" style="background-color: transparent; border: none;">
+          <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button collapsed btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              BANK INFORMATIONS
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="container-fluid">
+                <div class="row">
+                  {% if bank.name %}
+                  <div class="list-group" id="list-tab" role="tablist">
+                    <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Bank Name:</span>&nbsp;&nbsp;{{ bank.name }}
+                      </li>
+                      {% if bank.account %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Account No.:</span>&nbsp;&nbsp;{{ bank.account }}
+                      </li>
+                      {% endif %}
+                      {% if bank.branch %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Branch:</span>&nbsp;&nbsp;{{ bank.branch }}
+                      </li>
+                      {% endif %}
+                      {% if bank.salary %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <span>Sallary:</span>&nbsp;&nbsp;{{ bank.salary }}
+                      </li>
+                      {% endif %}
+                      {% if request.user.is_superuser %}
+                      <li class="list-group-item teal-color beige-color profile-list">
+                        <a href="{% url 'bank_edit' bank.id %}" class="add-information">Edit</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </div>
+              {% else %}
+              <h4>
+                {% if request.user.is_superuser %}
+                <p class="no-information"> No Information found! To add information <span><a href="{% url 'bank_form' %}" class="add-information">Click Here</a></span></p>
+                {% else%}
+                <p>No Information found!</p>
+                {% endif %}
+              </h4>
+              {% endif %}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- EMERGENCY INFORMATIONS -->
-    <div style="max-height: 40vh;">
-      <p>
-        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
-            aria-expanded="false" aria-controls="collapseThree">
-            EMERGENCY INFORMATIONS
-        </button>
-      </p>
-      <div class="collapse" id="collapseThree"  style="margin-left: 10px;">
-        <div class="panel-body">
-          <div class="container-fluid">
-            <div class="row">
-              {% if emergency.fullname %}
-              <div class="list-group" id="list-tab" role="tablist">
-                <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Full Name:</span>&nbsp;&nbsp;{{ emergency.fullname }}
-                  </li>
-                  {% if emergency.tel %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Phone Number:</span>&nbsp;&nbsp;{{ emergency.tel }}
-                  </li>
-                  {% endif %}
-                  {% if emergency.location %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Residence:</span>&nbsp;&nbsp;{{ emergency.location }}
-                  </li>
-                  {% endif %}
-                  {% if emergency.relationship %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Relationship:</span>&nbsp;&nbsp;{{ emergency.relationship }}
-                  </li>
-                  {% endif %}
-                  {% if request.user.is_superuser %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <a href="{% url 'emergency_edit' emergency.id %}" class="add-information">Edit</a>
-                  </li>
-                  {% endif %}
-                </ul>
-              </div>
-            </div>
-          {% else %}
-          <h4>
-            {% if request.user.is_superuser %}
-            <p class="no-information"> No Information found! To add information <span><a href="{% url 'emergency_form' %}" class="add-information">Click Here</a></span></p>
-            {% else%}
-            <p>No Information found!</p>
-            {% endif %}
-          </h4>
-          {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- BANK INFORMATIONS -->
-    <div style="max-height: 40vh;">
-      <p>
-        <button class="btn btn-profile" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
-            aria-expanded="false" aria-controls="collapseFour">
-            BANK INFORMATIONS
-        </button>
-      </p>
-      <div class="collapse" id="collapseFour"  style="margin-left: 10px;">
-        <div class="panel-body">
-          <div class="container-fluid">
-            <div class="row">
-              {% if bank.name %}
-              <div class="list-group" id="list-tab" role="tablist">
-                <ul class="list-group text-medium" style="overflow: scroll; max-height:50vh">
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Bank Name:</span>&nbsp;&nbsp;{{ bank.name }}
-                  </li>
-                  {% if bank.account %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Account No.:</span>&nbsp;&nbsp;{{ bank.account }}
-                  </li>
-                  {% endif %}
-                  {% if bank.branch %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Branch:</span>&nbsp;&nbsp;{{ bank.branch }}
-                  </li>
-                  {% endif %}
-                  {% if bank.salary %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <span>Sallary:</span>&nbsp;&nbsp;{{ bank.salary }}
-                  </li>
-                  {% endif %}
-                  <!-- {% if request.user.is_superuser %}
-                  <li class="list-group-item teal-color beige-color profile-list">
-                    <a href="#" class="add-information">Edit</a>
-                  </li>
-                  {% endif %} -->
-                </ul>
-              </div>
-            </div>
-          {% else %}
-          <h4>
-            {% if request.user.is_superuser %}
-            <p class="no-information"> No Information found! To add information <span><a href="{% url 'bank_form' %}" class="add-information">Click Here</a></span></p>
-            {% else%}
-            <p>No Information found!</p>
-            {% endif %}
-          </h4>
-          {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
     </div>
   </div>  
 </div>

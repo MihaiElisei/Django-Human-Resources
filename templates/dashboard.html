@@ -5,6 +5,8 @@
     <div class="row">
         <div class="col-md-2 padding-0">
             <div class="d-flex flex-column flex-shrink-0 p-3  beige-color teal-color">
+                <!-- SIDEBAR NAVIGATION -->
+                
                 <div class="sidebar-wrapper" >
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="min-height:100vh;">
                         <li class="active sidebar-item mt-5">
@@ -25,8 +27,8 @@
                         </li>
                         {% endif %}
                         <li class="sidebar-item">
-                            {% if request.user.is_superuser %}<a href="{% url 'leaves_list' %}">{% else %}<a href="#"> {% endif %}
-                                <i class="fas fa-plane-departure"></i></i>&nbsp;&nbsp;Leaves
+                            <a href="{% url 'leaves_list' %}">                              
+                                <i class="fas fa-plane-departure"></i>&nbsp;&nbsp;Leaves
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -72,5 +74,21 @@
         <!-- APPROVED LEAVES -->
         {% block rejected_leaves %}{% endblock rejected_leaves %}
     </div>
+    
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let ms = "{{ message }}";
+        swal("Perfect!", ms , "success")
+    </script>
+    {% else %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let me = "{{ message }}";
+        swal("Please try Again!", me , "error")
+    </script>
+    {% endif %}
+{% endfor %}
 </div>
 {% endblock content %}

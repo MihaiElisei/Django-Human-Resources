@@ -3,11 +3,13 @@
 
 {% block all_leaves %}
 <div class="col-md-10 dahsboard-color">
+  
     <div class="content">               
       <!-- TABLE -->
       <div class="table-responsive table-shadow">
         <div class="text-center table-description mt-5">
           <h4 class="table-title">ALL LEAVES TABLE</h4>
+          <a href="{% url 'create_leave' %}" class="btn teal-color beige-color btn-leave">Apply for Leave</a>
         </div>
         {% if leave_list %}
         <table class="table mt-5">
@@ -17,7 +19,9 @@
                 <th scope="col">Type</th>
                 <th scope="col">Day(s)</th>
                 <th scope="col">Status</th>
+                {% if request.user.is_superuser %}
                 <th scope="col">Actions</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
@@ -27,11 +31,13 @@
                 <td>{{ leave.leavetype}}</td>
                 <td>{{ leave.leave_days }}</td>
                 <td>{{ leave.status }}</td>
+                {% if request.user.is_superuser %}
                 <td>
                   <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn btn-primary" >
                     <i class="fas fa-directions"></i>
                   </a>
                 </td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>
@@ -40,6 +46,21 @@
       <p class="no-birthdays">No Records Available!</p>
       {% endif %}
       </div>          
-    </div>  
+    </div>
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let ms = "{{ message }}";
+        swal("Perfect!", ms , "success")
+    </script>
+    {% else %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let me = "{{ message }}";
+        swal("Please try Again!", me , "error")
+    </script>
+    {% endif %}
+{% endfor %}  
   </div>
 {% endblock all_leaves %}

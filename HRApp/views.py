@@ -41,16 +41,15 @@ def all_employees(request):
         employees = employees.filter(
 			Q(firstname__icontains=query) |
 			Q(lastname__icontains=query)
-		)
-
-    paginator = Paginator(employees, 10)  # show 10 employee lists per page
+			)
+    paginator = Paginator(employees, 10)  # show 10 employees per page
     page = request.GET.get('page')
     employees_paginated = paginator.get_page(page)
 
     dataset['employee_list'] = employees_paginated
     dataset['departments'] = departments
     dataset['all_employees'] = Employee.objects.all()
-    dataset['title'] = 'Employees list view'
+    dataset['title'] = 'All Employees'
     return render(request, 'dashboard/all_employees.html', dataset)
 
 
@@ -101,11 +100,11 @@ def create_employee(request):
 			instance.dateissued = request.POST.get('dateissued')
 
 			instance.save()
-			return redirect('/employees/')
+			messages.success(request, 'The Employee was added successfully')
+			return redirect('employees')
 		else:
-			messages.error(request, 'Trying to create dublicate employees with a single user account ', extra_tags='alert alert-warning alert-dismissible show')
+			messages.error(request, 'Oppppsss... Something went wrong! Please review your inputs!')
 			return redirect('create_employee')
-
 	dataset = dict()
 	form = EmployeeCreateForm()
 	dataset['form'] = form
@@ -160,16 +159,14 @@ def employee_edit_data(request, id):
 			instance.dateissued = request.POST.get('dateissued')
 
 			instance.save()
-			# messages.success(request, 'Account Updated Successfully !!!', extra_tags='alert alert-success alert-dismissible show')
-			return redirect('employees')
-
+			messages.success(request, 'The Employee was updated successfully')
+			
 		else:
-
-			messages.error(request, 'Error Updating account', extra_tags='alert alert-warning alert-dismissible show')
-			return HttpResponse("Form data not valid")
+			messages.error(request, 'Oppppsss... Something went wrong! Please review your inputs!')
+			
 
 	dataset = dict()
-	form = EmployeeCreateForm(request.POST or None,request.FILES or None,instance = employee)
+	form = EmployeeCreateForm(request.POST or None, request.FILES or None, instance = employee)
 	dataset['form'] = form
 	dataset['title'] = 'edit - {0}'.format(employee.get_full_name)
 	return render(request,'dashboard/add_employee.html',dataset)
@@ -195,10 +192,10 @@ def create_user(request):
 			instance.save()
 			username = form.cleaned_data.get("username")
 
-			messages.success(request,'Account created for {0} !!!'.format(username),extra_tags = 'alert alert-success alert-dismissible show' )
-			return redirect('users/all/')
+			messages.success(request,'Account created for {0} !!!'.format(username))
+			return redirect('all_users')
 		else:
-			messages.error(request,'Username or password is invalid',extra_tags = 'alert alert-warning alert-dismissible show')
+			messages.error(request,'Username or password is invalid. Please Try again!')
 			return redirect('create_user')
 
 
@@ -230,7 +227,7 @@ def user_profile(request):
 		dataset['bank'] = bank
 
 		return render(request,'dashboard/user_profile.html',dataset)
-	return HttpResponse("Sorry , not authenticated for this,admin or whoever you are :)")
+	return HttpResponse("Sorry, you are not authorized to access this!")
 
 	
 # USERS DETAILS
@@ -250,6 +247,28 @@ def user_detail(request,id):
 	dataset['bank'] = bank_instance
 	dataset['title'] = 'profile - {0}'.format(employee.get_full_name)
 	return render(request,'dashboard/user_profile.html',dataset)
+
+
+# BLOCK USERS
+def block_users(request,id):
+	user = get_object_or_404(User,id = id)
+	emp = Employee.objects.filter(user = user).first()
+	emp.is_blocked = True
+	emp.save()
+	user.is_active = False
+	user.save()
+	return redirect('all_users')
+
+
+# UNBLOCK USERS
+def unblock_users(request,id):
+	user = get_object_or_404(User,id = id)
+	emp = Employee.objects.filter(user = user).first()
+	emp.is_blocked = False
+	emp.save()
+	user.is_active = True
+	user.save()
+	return redirect('all_users')
 
 
 # CREATE EMERGENCY DETAILS
@@ -272,12 +291,10 @@ def emergency_form(request):
 			instance.relationship = request.POST.get('relationship')
 
 			instance.save()
-
-			messages.success(request,'Emergency Successfully Created for {0}'.format(name),extra_tags = 'alert alert-success alert-dismissible show')
+			messages.success(request,'Emergency Details Successfully Created')
 			return redirect('employees')
-
 		else:
-			messages.error(request,'Error Creating Emergency for {0}'.format(name),extra_tags = 'alert alert-warning alert-dismissible show')
+			messages.error(request,'Error Creating Emergency Details')
 			return redirect('emergency_form')
 
 	dataset = dict()
@@ -305,11 +322,11 @@ def emergency_edit(request,id):
 			instance.relationship = request.POST.get('relationship')
 
 			instance.save()
-
-			messages.success(request,'Emergency Details Successfully Updated',extra_tags = 'alert alert-success alert-dismissible show')
-			
+			messages.success(request,'Emergency Details Successfully Updated')
 			return redirect('employeeinfo',id = employee.id)
-
+		else:
+			messages.error(request,'Error Updating Emergency Details')
+			return redirect('employeeinfo',id = employee.id)
 	dataset = dict()
 	form = EmergencyForm(request.POST or None,instance = emergency)
 	dataset['form'] = form
@@ -321,12 +338,16 @@ def emergency_edit(request,id):
 def family_form(request):
 	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
+		
 	if request.method == 'POST':
-		form = FamilyForm(data = request.POST or None)
+		form = FamilyForm(data = request.POST)
+		
 		if form.is_valid():
 			instance = form.save(commit = False)
-			employee_id = request.POST.get('employee')
-			employee_object = get_object_or_404(Employee,id = employee_id)
+			id = request.POST.get('employee')
+			employee_object = Employee.objects.get(id = id)
+			name = employee_object.get_full_name
+			
 			instance.employee = employee_object
 			instance.status = request.POST.get('status')
 			instance.spouse = request.POST.get('spouse')
@@ -337,13 +358,11 @@ def family_form(request):
 			instance.mother = request.POST.get('mother')
 
 			instance.save()
-
-			messages.success(request,'Relationship Successfully Created for {0}'.format(employee_object),extra_tags = 'alert alert-success alert-dismissible show')
+			messages.success(request,'Family Details Successfully Created')
 			return redirect('employees')
 		else:
-			messages.error(request,'Failed to create Relationship for {0}'.format(employee_object),extra_tags = 'alert alert-warning alert-dismissible show')
+			messages.error(request,'Error Creating Family Details')
 			return redirect('family_form')
-
 	dataset = dict()
 
 	form = FamilyForm()
@@ -364,6 +383,8 @@ def family_edit(request,id):
 		form = FamilyForm(data = request.POST, instance = relation)
 		if form.is_valid():
 			instance = form.save(commit = False)
+			id = request.POST.get('employee')
+			
 			instance.employee = employee
 			instance.status = request.POST.get('status')
 			instance.spouse = request.POST.get('spouse')
@@ -375,16 +396,16 @@ def family_edit(request,id):
 			instance.relationship = request.POST.get('relationship')
 			instance.father = request.POST.get('father')
 			instance.mother = request.POST.get('mother')
-	
-			instance.save()
 
-			messages.success(request,'Relationship Successfully Updated for {0}'.format(employee.get_full_name),extra_tags = 'alert alert-success alert-dismissible show')
-			return redirect('employees')
+			instance.save()
+			messages.success(request,'Family Details Successfully Updated')
+			return redirect('employeeinfo',id = employee.id)
 		else:
-			messages.error(request,'Failed to update Relationship for {0}'.format(employee.get_full_name),extra_tags = 'alert alert-warning alert-dismissible show')
-			return redirect('family_form')
+			messages.error(request,'Error Updating Family Details')
+			return redirect('employeeinfo',id = employee.id)
+			
 	dataset = dict()
-	form = FamilyForm(request.POST or None,instance = relation)
+	form = FamilyForm(request.POST or None, instance = relation)
 
 	dataset['form'] = form
 	dataset['title'] = 'Update Family Details'
@@ -410,18 +431,50 @@ def bank_form(request):
 
 			instance.save()
 
-			messages.success(request,'Account Successfully Created for {0}'.format(employee_object.get_full_name),extra_tags = 'alert alert-success alert-dismissible show')
+			messages.success(request,'Bank Details Successfully Created')
 			return redirect('employees')
 		else:
-			messages.error(request,'Error Creating Account for {0}'.format(employee_object.get_full_name),extra_tags = 'alert alert-warning alert-dismissible show')
+			messages.error(request,'Error Creating Bank Details')
 			return redirect('bank_form')
-
 	dataset = dict()
 	form = BankAccountForm()
-	
 	dataset['form'] = form
 	dataset['title'] = 'Bank Details Form'
 	return render(request, 'dashboard/bank.html', dataset)
+
+
+# EDIT BANK DETAILS
+def bank_edit(request,id):
+	if not (request.user.is_superuser and request.user.is_authenticated):
+		return redirect('/')
+	bank_instance_obj = get_object_or_404(Bank, id = id)
+	employee = bank_instance_obj.employee
+
+	if request.method == 'POST':
+		form = BankAccountForm(request.POST, instance = bank_instance_obj)
+		if form.is_valid():
+			instance = form.save(commit = False)
+			instance.employee = employee
+
+			instance.name = request.POST.get('name')
+			instance.branch = request.POST.get('branch')
+			instance.account = request.POST.get('account')
+			instance.salary = request.POST.get('salary')
+
+			instance.save()
+
+			messages.success(request,'Bank Details Successfully Updated')
+			return redirect('employeeinfo',id = employee.id)
+		else:
+			messages.error(request,'Error Updating Bank Details')
+			return redirect('employeeinfo',id = employee.id)
+	dataset = dict()
+
+	form = BankAccountForm(request.POST or None,instance = bank_instance_obj)
+	
+	dataset['form'] = form
+	dataset['title'] = 'Update Bank Account'
+	return render(request,'dashboard/bank.html',dataset)
 
 
 # BIRTHDAYS
@@ -454,10 +507,10 @@ def create_leave(request):
 			instance.user = user
 			instance.save()
 
-			messages.success(request,'Leave Request Sent,wait for Human Resource Managers response',extra_tags = 'alert alert-success alert-dismissible show')
+			messages.success(request,'Leave Request Sent')
 			return redirect('leaves_list')
 		else:
-			messages.error(request,'failed to Request a Leave,please check entry dates',extra_tags = 'alert alert-warning alert-dismissible show')
+			messages.error(request,'Please check your dates')
 			return redirect('create_leave')
 
 	dataset = dict()
@@ -469,8 +522,6 @@ def create_leave(request):
 
 # ALL LEAVES LIST
 def all_leaves(request):
-	if not (request.user.is_staff and request.user.is_superuser):
-		return redirect('/')
 	leaves = Leave.objects.all_leaves()
 	return render(request,'dashboard/all_leaves.html',{'leave_list':leaves,'title':'leaves list - pending'})
 
@@ -480,7 +531,7 @@ def leaves_action(request,id):
 		return redirect('/')
 
 	leave = get_object_or_404(Leave, id = id)
-	employee = Employee.objects.filter(user = leave.user)[0]
+	employee = Employee.objects.filter(user = leave.user)
 	return render(request,'dashboard/leave_action.html',{'leave':leave,'employee':employee,'title':'{0}-{1} leave'.format(leave.user.username,leave.status)})
 
 
@@ -490,11 +541,11 @@ def approve_leave(request,id):
 		return redirect('/')
 	leave = get_object_or_404(Leave, id = id)
 	user = leave.user
-	employee = Employee.objects.filter(user = user)[0]
+	employee = Employee.objects.filter(user = user)
 	leave.approve_leave
 
-	messages.error(request,'Leave successfully approved for {0}'.format(employee.get_full_name),extra_tags = 'alert alert-success alert-dismissible show')
-	return redirect('leaves_action', id = id)
+	messages.success(request,'Leave successfully approved!')
+	return redirect('leaves_list')
 
 
 # UNAPPROVE LEAVE
@@ -503,6 +554,7 @@ def unapprove_leave(request,id):
 		return redirect('/')
 	leave = get_object_or_404(Leave, id = id)
 	leave.unapprove_leave
+	messages.success(request,'Leave successfully unapproved!')
 	return redirect('leaves_action', id=id) 
 
 # ALL APPROVED LEAVES
@@ -517,7 +569,7 @@ def reject_leave(request,id):
 	dataset = dict()
 	leave = get_object_or_404(Leave, id = id)
 	leave.reject_leave
-	messages.success(request,'Leave is rejected',extra_tags = 'alert alert-success alert-dismissible show')
+	messages.success(request,'Leave is successfully rejected!')
 	return redirect('leaves_list')
 
 # ALL REJECTED LEAVES
@@ -525,4 +577,4 @@ def rejected_leaves(request):
 	if not (request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
 	leaves = Leave.objects.all_rejected_leaves() 
-	return render(request,'dashboard/rejected_leaves.html',{'leave_list':leaves,'title':'approved leave list'})
+	return render(request,'dashboard/rejected_leaves.html',{'leave_list':leaves,'title':'rejected leave list'})

@@ -5,6 +5,7 @@
 		<div class="table-responsive table-shadow">
 			<div class="text-center table-description">
 			  <h4 class="table-title">ALL USERS TABLE</h4>
+              <p class="subtitle">(An employee must be created to view user in the table!)</p>
 			</div>
 			<table class="table mt-5">
 				<thead>
@@ -17,28 +18,43 @@
                     </tr>
                 </thead>
 				<tbody>
-                    {% for user in employees %}
+                    {% for emp in employees %}
                     <tr>
-                        <td>{{user.user.username}}</td>
-                        <td>{{ user.get_full_name }}</td>
-                        <td>{{ user.department }}</td>
-                        {% if user.user.is_active %}
+                        <td>{{emp.user.username}}</td>
+                        <td>{{ emp.get_full_name }}</td>
+                        <td>{{ emp.department }}</td>
+                        {% if emp.user.is_active %}
                         <td>active</td>
                         {% else %}
                         <td>inactive</td>
                         {% endif %}
-                        {%  if user.user.is_active and user.user.is_superuser %}
+                        {%  if emp.user.is_active and emp.user.is_superuser %}
                         <!-- Admin cannot block self -->
                         <td style="font-style:italic;">(admin)</td>
-                        {% elif user.user.is_active %}
-                        <td><a href="#" title="block user"><i class="fas fa-lock-open" style="color: #0E5E6F;"></i></a></td>
+                        {% elif emp.user.is_active %}
+                        <td><a href="{% url 'block_users' emp.user.id %}" title="block user"><i class="fas fa-lock-open" style="color: #0E5E6F;"></i></a></td>
                         {% else %}
-                        <td><a href="#" title="unblock user"><i class="fas fa-lock" style="color: #0E5E6F;"></i></a></td>
+                        <td><a href="{% url 'unblock_users' emp.user.id %}" title="unblock user"><i class="fas fa-lock" style="color: #0E5E6F;"></i></a></td>
                         {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
 			</table>
-		</div>	
+		</div>
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let ms = "{{ message }}";
+        swal("Perfect!", ms , "success")
+    </script>
+    {% else %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let me = "{{ message }}";
+        swal("Please try Again!", me , "error")
+    </script>
+    {% endif %}
+{% endfor %}
     </div>
 {% endblock all_users %}

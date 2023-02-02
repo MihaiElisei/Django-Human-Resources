@@ -25,8 +25,13 @@ urlpatterns = [
     path('create-user/', views.create_user, name='create_user'),
     # Path to all users
     path('users/all/', views.all_users, name='all_users'),
+    # Path to block an user
+    path('users/<int:id>/block', views.block_users, name='block_users'),
+    # Path to unblock users
+    path('users/<int:id>/unblock', views.unblock_users, name='unblock_users'),
     # Path to user profile
     path('user-profile/', views.user_profile, name='userprofile'),
+    # Path to Employee info
     path('employee/profile/<int:id>/', views.user_detail, name='employeeinfo'),
     # Path to emergency form
     path('emergency/create/', views.emergency_form, name='emergency_form'),
@@ -38,6 +43,8 @@ urlpatterns = [
     path('family/edit/<int:id>', views.family_edit, name='family_edit'),
     # Path to bank details form
     path('bank/create/', views.bank_form, name='bank_form'),
+    # Path to edti bank details
+    path('bank/edit/<int:id>/', views.bank_edit, name='bank_edit'),
     # Path to birthdays page
     path('birthdays/', views.birthdays, name='birthdays'),
 

@@ -63,7 +63,7 @@ class Role(models.Model):
 
 # BANK DETAILS MODEL
 class Bank(models.Model):
-    employee = models.ForeignKey('Employee',help_text='select employee(s) to add bank account',on_delete=models.CASCADE, blank=False, primary_key=True, unique=True)
+    employee = models.ForeignKey('Employee',help_text='select employee(s) to add bank account',on_delete=models.CASCADE,null=True,blank=False)
     name = models.CharField(_('Name of Bank'), max_length=125, blank=False, null=True)
     account = models.CharField(_('Account Number'), help_text='employee account number', max_length=30, blank=False, null=True)
     branch = models.CharField(_('Branch'), help_text='which branch was the account issue', max_length=125, blank=True, null=True)
@@ -85,16 +85,17 @@ class Bank(models.Model):
 class Relationship(models.Model):
     MARRIED = 'Married'
     SINGLE = 'Single'
+    PARTNERSHIP = 'Civil Partnership'
     DIVORCED = 'Divorced'
-    WIDOW = 'Widow'
-    WIDOWER = 'Widower'
+    WIDOW = 'Widowed'
+    
 
     STATUS = (
     (MARRIED, 'Married'),
     (SINGLE, 'Single'),
+    (PARTNERSHIP, 'Civil Partnership'),
     (DIVORCED, 'Divorced'),
-    (WIDOW, 'Widow'),
-    (WIDOWER, 'Widower'),
+    (WIDOW, 'Widowed'),
     )
 
     FATHER = 'Father'
@@ -132,24 +133,20 @@ class Relationship(models.Model):
     )
 
     employee = models.ForeignKey('Employee', on_delete=models.CASCADE, null=True, blank=True)
-    status = models.CharField(_('Marital Status'), max_length=10, default=SINGLE, choices=STATUS, blank=False, null=True)
-    spouse = models.CharField(_('Spouse (Fullname)'), max_length=255, blank=True, null=True)
+    status = models.CharField(_('Marital Status'), max_length=17, default=SINGLE, choices=STATUS, blank=False, null=True)
+    spouse = models.CharField(_('Spouse (Full Name)'), max_length=255, blank=True, null=True)
     occupation = models.CharField(_('Occupation'), max_length=125, help_text='spouse occupation', blank=True, null=True)
-    tel = PhoneNumberField(default=None, null = True, blank=True, verbose_name='Spouse Phone Number (Example +353240000000)', help_text= 'Enter number with Country Code Eg. +353240000000')
+    tel = PhoneNumberField(default=None, null=True, blank=True, verbose_name='Spouse Phone Number', help_text='Enter number with Country Code Eg. +353240000000')
     children = models.PositiveIntegerField(_('Number of Children'), null=True, blank=True, default=0)
 
-    nextofkin = models.CharField(_('Next of Kin'),max_length=255,blank=False,null=True,help_text='fullname of next of kin')
-    contact = PhoneNumberField(verbose_name='Next of Kin Phone Number (Example +353240000000)',null=True,blank=True,help_text='Phone Number of Next of Kin')
-    relationship = models.CharField(_('Relationship with Next of Person'),help_text='Who is this person to you ?',max_length=15,choices=NEXTOFKIN_RELATIONSHIP,blank=False,null=True)
+    nextofkin = models.CharField(_('Next of Kin'), max_length=255, blank=False, null=True, help_text='fullname of next of kin')
+    contact = PhoneNumberField(verbose_name='Next of Kin Phone Number', null=True, blank=True, help_text='Phone Number of Next of Kin')
+    relationship = models.CharField(_('Relationship with Next of Person'), help_text='Who is this person to you ?', max_length=15, choices=NEXTOFKIN_RELATIONSHIP, blank=False, null=True)
 
     father = models.CharField(_('Father\'s Name'),max_length=255,blank=True,null=True)
-    foccupation = models.CharField(_('Father\'s Occupation'),max_length=125,help_text='',blank=True,null=True)
-
     mother = models.CharField(_('Mother\'s Name'),max_length=255,blank=True,null=True)
-    moccupation = models.CharField(_('Mother\'s Occupation'),max_length=125,help_text='',blank=True,null=True)
 
     created = models.DateTimeField(verbose_name=_('Created'),auto_now_add=True,null=True)
-    updated = models.DateTimeField(verbose_name=_('Updated'),auto_now=True,null=True)
 
     class Meta:
         verbose_name = 'Relationship'
@@ -200,10 +197,10 @@ class Emergency(models.Model):
     )
 
     employee = models.ForeignKey('Employee', on_delete=models.CASCADE, null=True, blank=True)
-    fullname = models.CharField(_('Fullname'),help_text='who should we contact ?', max_length=255, null=True ,blank=False)
-    tel = PhoneNumberField(default='+353240000000', null = False, blank=False, verbose_name='Phone Number (Example +353240000000)', help_text= 'Enter number with Country Code Eg. +353240000000')
+    fullname = models.CharField(_('Full Name'),help_text='who should we contact ?', max_length=255, null=True ,blank=False)
+    tel = PhoneNumberField(null = False, blank=False, verbose_name='Phone Number', help_text= 'Enter number with Country Code Eg. +353240000000')
     location = models.CharField(_('Place of Residence'),max_length= 125,null=True,blank=False)
-    relationship = models.CharField(_('Relationship with Person'),help_text='Who is this person to you ?',max_length=8,default=FATHER,choices=EMERGENCY_RELATIONSHIP,blank=False,null=True)
+    relationship = models.CharField(_('Relationship with Person'),help_text='Who is this person to you ?', max_length=8, choices=EMERGENCY_RELATIONSHIP, blank=False, null=True)
 
 
     created = models.DateTimeField(verbose_name=_('Created'),auto_now_add=True)
@@ -275,15 +272,15 @@ class Employee(models.Model):
 
     # PERSONAL DATA
     id = models.CharField(_('Employee ID Number'), max_length=10, null=False, blank=False, primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     title = models.CharField(_('Title'), max_length=5, default=MR, choices=TITLE, blank=False, null=False)
     firstname = models.CharField(_('First Name'), max_length=125, null=False, blank=False)
     lastname = models.CharField(_('Last Name'), max_length=125, null=False, blank=False)
     othername = models.CharField(_('Other Name (optional)'), max_length=125, null=True, blank=True)
     sex = models.CharField(_('Gender'), max_length=9, choices=GENDER, blank=False)
     email = models.CharField(_('Email'), max_length=255, default=None, blank=False, null=False)
-    tel = PhoneNumberField(default='+353000000000', null=False, blank=False, verbose_name='Phone Number (Example +353000000000)', help_text= 'Enter number with Country Code Eg. +353000000000')
-    birthday = models.DateField(_('Birthday'), blank=False, null=False)
+    tel = PhoneNumberField(null=False, blank=False, verbose_name='Phone Number', help_text= 'Enter number with Country Code Eg. +353000000000')
+    birthday = models.DateField(_('Birthday'),blank=False,null=False)
     nationality = models.ForeignKey(Nationality, verbose_name=_('Nationality'), on_delete=models.SET_NULL, null=True, default=None)
     address = models.CharField(_('Address'), help_text='address of current residence', max_length=125, null=True, blank=True)
 
@@ -300,7 +297,6 @@ class Employee(models.Model):
     dateissued = models.DateField(_('Date Issued'), help_text='date staff id was issued', blank=False, null=True)
  
     created = models.DateTimeField(verbose_name=_('Created'), auto_now_add=True, null=True)
-    updated = models.DateTimeField(verbose_name=_('Updated'), auto_now=True, null=True)
     is_blocked = models.BooleanField(_('Is Blocked'),help_text='button to toggle employee block and unblock',default=False)
     is_deleted = models.BooleanField(_('Is Deleted'),help_text='button to toggle employee deleted and undelete',default=False)
 
@@ -395,7 +391,7 @@ class Leave(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
     startdate = models.DateField(verbose_name=_('Start Date'),help_text='leave start date is on ..',null=True,blank=False)
     enddate = models.DateField(verbose_name=_('End Date'),help_text='coming back on ...',null=True,blank=False)
-    leavetype = models.CharField(choices=LEAVE_TYPE,max_length=25,default=SICK,null=True,blank=False)
+    leavetype = models.CharField(verbose_name=_('Leave Type'),choices=LEAVE_TYPE,max_length=25,null=True,blank=False)
     reason = models.CharField(verbose_name=_('Reason for Leave'),max_length=255,help_text='add additional information for leave',null=True,blank=True)
     defaultdays = models.PositiveIntegerField(verbose_name=_('Leave days per year counter'),default=DAYS,null=True,blank=True)
 	

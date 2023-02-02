@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+import datetime
 
 
 # EMPLOYEE
@@ -9,6 +10,11 @@ class EmployeeCreateForm(forms.ModelForm):
 	class Meta:
 		model = Employee
 		exclude = ['is_blocked', 'is_deleted', 'created', 'updated']
+		widgets = {
+			'birthday': forms.DateTimeInput(format='%Y-%m-%d %H:%M:%S', attrs={'class': 'datetimefield'}),
+			'startdate': forms.DateTimeInput(format='%Y-%m-%d %H:%M:%S', attrs={'class': 'datetimefield'}),
+			'dateissued': forms.DateTimeInput(format='%Y-%m-%d %H:%M:%S', attrs={'class': 'datetimefield'})
+		}
 		
 
 # ADD NEW USER
@@ -29,7 +35,7 @@ class EmergencyForm(forms.ModelForm):
 class FamilyForm(forms.ModelForm):
 	class Meta:
 		model = Relationship
-		fields = ['employee', 'status', 'spouse', 'occupation', 'tel', 'children', 'nextofkin', 'contact', 'relationship', 'father', 'foccupation', 'mother', 'moccupation']
+		fields = ['employee', 'status', 'spouse', 'occupation', 'tel', 'children', 'nextofkin', 'contact', 'relationship', 'father', 'mother']
 
 
 # CREATE BANK FORM
@@ -46,3 +52,14 @@ class CreateLeave(forms.ModelForm):
 	class Meta:
 		model = Leave
 		exclude = ['user', 'defaultdays', 'hrcomments', 'status', 'is_approved', 'updated', 'created']
+
+	def clean_enddate(self):
+		enddate = self.cleaned_data['enddate']
+		startdate = self.cleaned_data['startdate']
+		today_date = datetime.date.today()
+		if (startdate or enddate) < today_date:
+			raise forms.ValidationError("Selected dates are incorrect, please select again")
+
+		elif startdate >= enddate:
+			raise forms.ValidationError("Selected dates are wrong")
+		return enddate

@@ -24,5 +24,22 @@
             </div>
         </div>
     </div>
+      <!-- SCRIPTS -->
+    <!-- Display messages -->
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script>
+                let ms = "{{ message }}";
+                swal("Perfect!", ms , "success")
+            </script>
+            {% else %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script>
+                let me = "{{ message }}";
+                swal("Please try Again!", me , "error")
+            </script>
+        {% endif %}
+    {% endfor %}
 </div>        
 {% endblock emergency %}

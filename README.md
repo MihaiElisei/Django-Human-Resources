@@ -18,7 +18,7 @@
 * [Deployment](#6-deployment)
 * [Acknowledgement](#7-acknowledgement)
 
-Welcome to [Player vs. Player Game!](https://human-resources.onrender.com/)
+Welcome to [Human-Resources App!](https://human-resources.onrender.com/)
 
 # Introduction
 

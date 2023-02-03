@@ -1,12 +1,13 @@
 {% extends 'dashboard.html' %}
 
+{% block title %} All Leaves {% endblock title %}
 
 {% block all_leaves %}
-<div class="col-md-10 dahsboard-color">
+<div class="col py-3 dahsboard-color">
     <div class="content">   
                   
       <!-- TABLE -->
-      <div class="table-responsive table-shadow">
+      <div class="table-responsive table-shadow scroll-form">
         <div class="text-center table-description mt-5">
           <h4 class="table-title">ALL LEAVES TABLE</h4>
           <a href="{% url 'create_leave' %}" class="btn teal-color beige-color btn-leave">Apply for Leave</a>

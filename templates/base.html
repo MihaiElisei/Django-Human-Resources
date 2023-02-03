@@ -10,20 +10,22 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
       <link rel="stylesheet" href="{% static 'css/style.css' %}">
-      <title>Document</title>
+      <title>{% block title %} Human Resources App {% endblock title %}</title>
   </head>
   <body>
         <header>
             <nav class="navbar navbar-expand-lg teal-color">
-                <div class="col-sm">
-                    <a href="{% url 'index' %}" class="navbar-brand flex-grow-1 beige-color" style="text-align: center; margin-left: 25px; font-size: 25px;">
+                <div class="col-sm" style="max-width: 300px;">
+                    <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'index' %}{% endif %}"
+                     class="navbar-brand flex-grow-1 beige-color"
+                     style="text-align: center; margin-left: 25px; font-size: 25px;" >
                         {% block navbar-content %}
                         <i class="fas fa-users-cog logo"></i>&nbsp;&nbsp; HR-APP
                         {% endblock navbar-content %}
                     </a>
                 </div>
                 {% if user.is_authenticated %}
-                  {% if request.user.is_superuser %}
+                {% if request.user.is_superuser %}
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
                     <div class="container-fluid">
                       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

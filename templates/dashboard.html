@@ -2,46 +2,41 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2 padding-0">
-            <div class="d-flex flex-column flex-shrink-0 p-3  beige-color teal-color">
-                <!-- SIDEBAR NAVIGATION -->
-                
-                <div class="sidebar-wrapper" >
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="min-height:100vh;">
-                        <li class="active sidebar-item mt-5">
-                            <a href="{% url 'dashboard' %}">
-                                <i class="fas fa-chart-line"></i>&nbsp;&nbsp;Dashboard 
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{% url 'userprofile' %}">
-                                <i class="fas fa-id-card"></i></i></i>&nbsp;&nbsp;My Profile
-                            </a>
-                        </li>
-                        {% if request.user.is_superuser and request.user.is_staff %}
-                        <li class="sidebar-item">
-                            <a href="{% url 'employees' %}">
-                                <i class="fas fa-user"></i>&nbsp;&nbsp;All Employees
-                            </a>
-                        </li>
-                        {% endif %}
-                        <li class="sidebar-item">
-                            <a href="{% url 'leaves_list' %}">                              
-                                <i class="fas fa-plane-departure"></i>&nbsp;&nbsp;Leaves
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{% url 'birthdays' %}">
-                                <i class="fas fa-birthday-cake"></i></i>&nbsp;&nbsp;Birthday
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <!-- ---------------DASHBOARD BLOCKS--------------- -->
+  <div class="row flex-nowrap">
+    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 teal-color beige-color">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+            <ul class="nav nav-pills flex-column mb-sm-auto mt-5 align-items-center align-items-sm-right" id="menu" style="width: 100%;">
+              <li class="nav-item sidebar-item">
+                  <a href="{% url 'dashboard' %}" class="nav-link align-middle px-0">
+                      <i class="fas fa-chart-line"></i><span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                  </a>
+              </li>
+              <li class="nav-item sidebar-item">
+                  <a href="{% url 'userprofile' %}" class="nav-link align-middle px-0">
+                      <i class="fas fa-id-card"></i><span class="ms-1 d-none d-sm-inline">My Profile</span>
+                  </a>
+              </li>
+              {% if request.user.is_superuser and request.user.is_staff %}
+              <li class="nav-item sidebar-item">
+                  <a href="{% url 'employees' %}" class="nav-link align-middle px-0">
+                      <i class="fas fa-user"></i><span class="ms-1 d-none d-sm-inline">All Employees</span>
+                  </a>
+              </li>
+              {% endif %}
+              <li class="nav-item sidebar-item">
+                  <a href="{% url 'leaves_list' %}" class="nav-link align-middle px-0">                              
+                      <i class="fas fa-plane-departure"></i><span class="ms-1 d-none d-sm-inline">Leaves</span>
+                  </a>
+              </li>
+              <li class="nav-item sidebar-item">
+                  <a href="{% url 'birthdays' %}" class="nav-link align-middle px-0">
+                      <i class="fas fa-birthday-cake"></i><span class="ms-1 d-none d-sm-inline">Birthdays</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+    </div>
+     <!-- ---------------DASHBOARD BLOCKS--------------- -->
 
         <!-- DASHBOARD HOME -->
         {% block dahsboard-home %}{% endblock dahsboard-home %}
@@ -73,9 +68,10 @@
         {% block approved_leaves %}{% endblock approved_leaves %}
         <!-- APPROVED LEAVES -->
         {% block rejected_leaves %}{% endblock rejected_leaves %}
-    </div>
-    
-    {% for message in messages %}
+  </div>
+
+  <!-- Display Messages -->
+  {% for message in messages %}
     {% if message.tags == 'success' %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>

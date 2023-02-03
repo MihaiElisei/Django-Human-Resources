@@ -10,9 +10,6 @@
 .beige-color{
     color:#F2DEBA;
 }
-.text-medium{
-    font-size: 25px;
-}
 .padding-0{
     padding-right:0;
     padding-left:0;
@@ -29,9 +26,12 @@
 
 .form-wrapper::-webkit-scrollbar,
 #list-tab::-webkit-scrollbar,
-ul::-webkit-scrollbar{
+ul::-webkit-scrollbar,
+.no-scroll::-webkit-scrollbar,
+.scroll-form::-webkit-scrollbar{
     display: none;
 }
+
 
 .subtitle{
     color: #0E5E6F;
@@ -129,10 +129,14 @@ position: fixed;
     color:#F2DEBA;
     font-size: 20px;
     text-align: center;
-    display: block;
-    padding: 20px;
+    padding: 25px;
 }
-
+.sidebar-item a:hover{
+    color:#F2DEBA;
+}
+.nav-pills{
+    text-align: center!important;
+}
 .container-fluid{
     margin: 0;
     padding: 0;
@@ -262,7 +266,7 @@ input[type="color"]:focus,
 
 .profile-list{
     border: none;
-    padding: 15px;
+    padding: 10px;
     
 }
 
@@ -295,5 +299,18 @@ input[type="color"]:focus,
     font-size: 25px;
     color: #820000;
     font-weight: bold;
+}
+
+
+/* ------------------------------------
+            MEDIA QUERIES
+--------------------------------------*/
+/* For larger to medium screens size from 1200px wide and down */
+@media screen and (max-width:1200px){
+   
+ .username{
+    display: none;
+ }
+
 }
 

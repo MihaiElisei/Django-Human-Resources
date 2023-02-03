@@ -14,12 +14,15 @@ from .manager import *
 
 # RENDER INDEX PAGE
 def index(request):
-    return render(request, "index.html")
+	if request.user.is_authenticated:
+		return render(request, "dashboard/dashboard_home.html")
+	else:
+		return render(request, "index.html")
 
 
 # RENDER DASHBOARD PAGE
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url="accounts/login")
+@login_required(login_url="/accounts/login/")
 def dashboard(request):
     return render(request, "dashboard/dashboard_home.html")
 
@@ -27,6 +30,8 @@ def dashboard(request):
 # ------------------------EMPLOYEES
 
 # RENDER ALL EMPLOYEES
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def all_employees(request):
     if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
         return redirect('/')
@@ -55,7 +60,7 @@ def all_employees(request):
 
 # CREATE NEW EMPLOYEE
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url="login")
+@login_required(login_url="/accounts/login/")
 def create_employee(request):
 	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
@@ -114,7 +119,7 @@ def create_employee(request):
 
 # EDIT EMPLOYEE
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url="login")
+@login_required(login_url="/accounts/login/")
 def employee_edit_data(request, id):
 	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
@@ -174,7 +179,7 @@ def employee_edit_data(request, id):
 
 # DELETE EMPLOYEE
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url="login")
+@login_required(login_url="/accounts/login/")
 def delete_employee(request, id):
     employee = Employee.objects.get(id=id)
     employee.delete()
@@ -184,6 +189,8 @@ def delete_employee(request, id):
 
 # -----------------------------USERS
 # CREATE NEW USER
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def create_user(request):
 	if request.method == 'POST':
 		form = CreateUserForm(data = request.POST)
@@ -206,6 +213,8 @@ def create_user(request):
 	return render(request,'account/create_user.html',dataset)
 
 # VIEW ALL USERS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def all_users(request):
 	employees = Employee.objects.all()
 	
@@ -217,6 +226,8 @@ def all_users(request):
 
 
 # USER PROFILE
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def user_profile(request):
 	user = request.user
 	if user.is_authenticated:
@@ -236,6 +247,8 @@ def user_profile(request):
 
 	
 # USERS DETAILS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def user_detail(request,id):
 	if not request.user.is_authenticated:
 		return redirect('/')
@@ -255,6 +268,8 @@ def user_detail(request,id):
 
 
 # BLOCK USERS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def block_users(request,id):
 	user = get_object_or_404(User,id = id)
 	emp = Employee.objects.filter(user = user).first()
@@ -266,6 +281,8 @@ def block_users(request,id):
 
 
 # UNBLOCK USERS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def unblock_users(request,id):
 	user = get_object_or_404(User,id = id)
 	emp = Employee.objects.filter(user = user).first()
@@ -277,6 +294,8 @@ def unblock_users(request,id):
 
 
 # CREATE EMERGENCY DETAILS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def emergency_form(request):
 	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
@@ -310,6 +329,8 @@ def emergency_form(request):
 
 
 # EDIT EMERGENCY DETAILS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def emergency_edit(request,id):
 	if not (request.user.is_authenticated and request.user.is_superuser):
 		return redirect('/')
@@ -340,6 +361,8 @@ def emergency_edit(request,id):
 
 
 # CREATE FAMILY DETAILS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def family_form(request):
 	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
@@ -378,6 +401,8 @@ def family_form(request):
 
 
 # EDIT FAMILY DETAILS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def family_edit(request,id):
 	if not (request.user.is_authenticated and request.user.is_authenticated):
 		return redirect('/')
@@ -418,6 +443,8 @@ def family_edit(request,id):
 
 
 # CREATE BANK DETAILS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def bank_form(request):
 	if not (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
@@ -449,6 +476,8 @@ def bank_form(request):
 
 
 # EDIT BANK DETAILS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def bank_edit(request,id):
 	if not (request.user.is_superuser and request.user.is_authenticated):
 		return redirect('/')
@@ -483,6 +512,8 @@ def bank_edit(request,id):
 
 
 # BIRTHDAYS
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def birthdays(request):	
 	if not request.user.is_authenticated:
 		return redirect('/')
@@ -507,6 +538,8 @@ def birthdays(request):
 # -----------------------------LEAVE
 
 # CREATE LEAVE
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def create_leave(request):
 	if not request.user.is_authenticated:
 		return redirect('/')
@@ -532,6 +565,8 @@ def create_leave(request):
 
 
 # ALL LEAVES LIST
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def all_leaves(request):
 	leaves = Leave.objects.all_leaves()
 	if request.user.is_superuser:
@@ -548,11 +583,13 @@ def leaves_action(request,id):
 		return redirect('/')
 
 	leave = get_object_or_404(Leave, id = id)
-	employee = Employee.objects.filter(user = leave.user)
+	employee = Employee.objects.filter(user = leave.user)[0]
 	return render(request,'dashboard/leave_action.html',{'leave':leave,'employee':employee,'title':'{0}-{1} leave'.format(leave.user.username,leave.status)})
 
 
 # APROVE LEAVE
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def approve_leave(request,id):
 	if not (request.user.is_superuser and request.user.is_authenticated):
 		return redirect('/')
@@ -566,6 +603,8 @@ def approve_leave(request,id):
 
 
 # UNAPPROVE LEAVE
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def unapprove_leave(request,id):
 	if not (request.user.is_authenticated and request.user.is_superuser):
 		return redirect('/')
@@ -575,6 +614,8 @@ def unapprove_leave(request,id):
 	return redirect('leaves_action', id=id) 
 
 # ALL APPROVED LEAVES
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def approved_leaves(request):
 	if not (request.user.is_superuser and request.user.is_staff):
 		return redirect('/')
@@ -587,6 +628,8 @@ def approved_leaves(request):
 	return render(request,'dashboard/approved_leaves.html',{'leave_list':leave_list})
 
 # REJECT LEAVE
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def reject_leave(request,id):
 	dataset = dict()
 	leave = get_object_or_404(Leave, id = id)
@@ -595,6 +638,8 @@ def reject_leave(request,id):
 	return redirect('leaves_list')
 
 # ALL REJECTED LEAVES
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="/accounts/login/")
 def rejected_leaves(request):
 	if not (request.user.is_superuser and request.user.is_staff):
 		return redirect('/')

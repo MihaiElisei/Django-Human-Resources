@@ -1,8 +1,10 @@
 {% extends "dashboard.html" %}
 
+{% block title %} All Employees {% endblock title %}
+
 {% block employees %}
-<div class="col-md-10 dahsboard-color">
-    <div class="content">
+<div class="col py-3 dahsboard-color">
+    <div class="content scroll-form">
       <div class="container-fluid">                       
         <!-- Search form -->
         <div class="row" style="margin-bottom: 2.2rem;margin-top: 3rem;">
@@ -34,7 +36,7 @@
               <th scope="col">Department</th>
               <th scope="col">Status</th>
               <th scope="col">Created At</th>
-              <th scope="col">Actions</th>
+              <th scope="col" style="width: 30%;">Actions</th>
             </tr>
           </thead>
           <tbody style="text-align: center;">
@@ -56,13 +58,13 @@
               {% endif %}
               <td>{{ employee.created | date:'d/m/Y (H:i)' }}</td>
               <td> 
-                <a href="{% url 'employeeinfo' employee.id %}" class="btn btn-info" title="Profile">
+                <a href="{% url 'employeeinfo' employee.id %}" class="btn btn-sm btn-info btn-edit" title="Profile">
                   <i class="fas fa-user"></i>
                 </a>
-                <a href="/employee/profile/edit/{{ employee.id }}" class="btn btn-primary" title="Edit Employee">
+                <a href="/employee/profile/edit/{{ employee.id }}" class="btn btn-sm btn-primary btn-edit" title="Edit Employee">
                   <i class="fas fa-pen"></i>
                 </a>                       
-                <a href="/delete_employee/{{ employee.id }}" class="btn btn-danger" title="Delete Employee">
+                <a href="/delete_employee/{{ employee.id }}" class="btn btn-sm btn-danger btn-edit" title="Delete Employee">
                   <i class="fas fa-trash"></i>
                 </a>
               </td>

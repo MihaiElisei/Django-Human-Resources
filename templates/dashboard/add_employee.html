@@ -1,30 +1,27 @@
 {% extends 'dashboard.html' %}
 {% load crispy_forms_tags %}
 
+{% block title %} Add/Edit Employee {% endblock title %}
 
-{% block add_employee %}
-<div class="col-md-10 dahsboard-color">
-    <div class="content">
-        <div class="container-fluid">
-            <div class="form-wrapper scroll-form">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                        <h3 class="p-3 table-title">Add Employee</h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-10 col-md-12 col-sm-12 center-form">
-                        <form action="" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{form | crispy }}
-                            <button type="submit" class="btn btn-md btn-block mb-3 btn-submit">Submit</button>
-                        </form>
-                    </div>
-                </div>
+{% block add_employee %} 
+<div class="col py-3 beige-color dahsboard-color">
+    <div class="form-wrapper scroll-form">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                <h3 class="p-3 table-title">Add Employee</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 col-md-12 col-sm-12 center-form">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form | crispy }}
+                    <button type="submit" class="btn btn-md btn-block mb-3 btn-submit">Submit</button>
+                </form>
             </div>
         </div>
     </div>
-    
+
     <!-- SCRIPTS -->
     <!-- Display messages -->
     {% for message in messages %}
@@ -53,6 +50,5 @@
         });
 
 </script>
-</div>       
- 
+</div>
 {% endblock add_employee %}

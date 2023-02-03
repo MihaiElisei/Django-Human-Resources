@@ -1,8 +1,9 @@
 {% extends 'dashboard.html' %}
 
+{% block title %} All Rejected Leaves {% endblock title %}
 
 {% block rejected_leaves %}
-<div class="col-md-10 dahsboard-color">
+<div class="col py-3 dahsboard-color">
     <div class="content">               
       <!-- TABLE -->
       <div class="table-responsive table-shadow">
@@ -10,7 +11,7 @@
           <h4 class="table-title">Rejected Leaves Table</h4>
         </div>
         {% if leave_list %}
-        <table class="table">
+        <table class="table mt-5">
             <thead>
               <tr>
                 <th scope="col">User</th>
@@ -28,7 +29,7 @@
                 <td>{{ leave.leave_days }}</td>
                 <td>{{ leave.status }}</td>
                 <td> 
-                    <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn btn-primary" >
+                    <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn teal-color beige-color" >
                         <i class="fas fa-directions"></i>
                       </a> 
                 </td>

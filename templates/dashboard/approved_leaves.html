@@ -1,8 +1,10 @@
 {% extends 'dashboard.html' %}
 
+{% block title %} Approved Leaves {% endblock title %}
+
 {% block approved_leaves %}
-<div class="col-md-10 dahsboard-color">
-    <div class="content">  
+<div class="col py-3 dahsboard-color">
+    <div class="content scroll-form">  
       <!-- TABLE -->
       <div class="mt-5">
         <div class="text-center mt-5">
@@ -27,10 +29,10 @@
                 <td>{{ leave.leave_days }}</td>
                 <td>{{ leave.status }}</td>
                 <td> 
-                    <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn btn-primary" >
+                    <a href="{% url 'leaves_action' leave.id %}" title="Actions" class="btn btn-sm btn-primary" >
                       <i class="fas fa-directions"></i>
                     </a>  
-                    <a href="{% url 'unapprove_leave' leave.id %}" title="Unapprove" class="btn btn-danger" >
+                    <a href="{% url 'unapprove_leave' leave.id %}" title="Unapprove" class="btn btn-sm btn-danger" >
                       <i class="fas fa-user-slash"></i>
                     </a> 
                 </td>

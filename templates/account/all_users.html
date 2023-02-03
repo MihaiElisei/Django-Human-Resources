@@ -10,9 +10,9 @@
 			<table class="table mt-5">
 				<thead>
                     <tr>
-                        <th scope="col">Username</th>
-                        <th scope="col">Employee (fullname) </th>
-                        <th scope="col">Department</th>
+                        <th scope="col" class="hide">Username</th>
+                        <th scope="col">Employee (Full Name) </th>
+                        <th scope="col" class="hide">Department</th>
                         <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -20,9 +20,9 @@
 				<tbody>
                     {% for emp in employees %}
                     <tr>
-                        <td>{{emp.user.username}}</td>
+                        <td class="hide">{{emp.user.username}}</td>
                         <td>{{ emp.get_full_name }}</td>
-                        <td>{{ emp.department }}</td>
+                        <td class="hide">{{ emp.department }}</td>
                         {% if emp.user.is_active %}
                         <td>active</td>
                         {% else %}

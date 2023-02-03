@@ -31,11 +31,11 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Full Name</th>
-              <th scope="col">Phone No.</th>
-              <th scope="col">Role</th>
+              <th scope="col" class="hide">Phone No.</th>
+              <th scope="col" class="hide">Role</th>
               <th scope="col">Department</th>
-              <th scope="col">Status</th>
-              <th scope="col">Created At</th>
+              <th scope="col" class="hide">Status</th>
+              <th scope="col" class="hide">Created At</th>
               <th scope="col" style="width: 30%;">Actions</th>
             </tr>
           </thead>
@@ -48,15 +48,15 @@
                 <th scope="row">-</th>
               {% endif %}
               <td>{{ employee.get_full_name }}</td>
-              <td>{{ employee.tel }}</td>
-              <td>{{ employee.role }}</td>
+              <td class="hide">{{ employee.tel }}</td>
+              <td class="hide">{{ employee.role }}</td>
               <td>{{ employee.department }}</td>
               {% if employee.is_blocked %}
-              <td>Inactive</td>
+              <td class="hide">Inactive</td>
               {% else %}
-              <td>active</td>
+              <td class="hide">active</td>
               {% endif %}
-              <td>{{ employee.created | date:'d/m/Y (H:i)' }}</td>
+              <td class="hide">{{ employee.created | date:'d/m/Y (H:i)' }}</td>
               <td> 
                 <a href="{% url 'employeeinfo' employee.id %}" class="btn btn-sm btn-info btn-edit" title="Profile">
                   <i class="fas fa-user"></i>

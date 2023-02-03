@@ -313,4 +313,17 @@ input[type="color"]:focus,
  }
 
 }
-
+@media screen and (max-width:900px){
+   .hide{
+    display: none;
+   }
+   .leave-action{
+    width: 35px;
+   }
+   .leave-decide{
+    min-width: 90%;
+   }
+   .table-title{
+    font-size: 25px;
+   }
+}

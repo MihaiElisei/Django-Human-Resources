@@ -15,7 +15,7 @@
             <thead>
               <tr>
                 <th scope="col">User</th>
-                <th scope="col">Type</th>
+                <th scope="col" class="hide">Type</th>
                 <th scope="col">Day(s)</th>
                 <th scope="col">Status</th>
                 <th scope="col">Actions</th>
@@ -25,7 +25,7 @@
                 {% for leave in leave_list %}
               <tr>
                 <td>{{ leave.user }}</td>
-                <td>{{ leave.leavetype}}</td>
+                <td class="hide">{{ leave.leavetype}}</td>
                 <td>{{ leave.leave_days }}</td>
                 <td>{{ leave.status }}</td>
                 <td> 
